@@ -7,10 +7,7 @@
   <meta name="author" content="Govind" />
   <title>GOVIND | Developer Portfolio</title>
 
-  <!-- Favicon -->
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/179/179309.png" type="image/x-icon" />
-
-  <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;900&display=swap" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
@@ -22,22 +19,101 @@
       box-sizing: border-box;
     }
 
+    :root {
+      --bg-gradient: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #0f0c29);
+      --card-bg: rgba(15, 12, 41, 0.55);
+      --text-main: #ffffff;
+      --text-secondary: #d1d5db;
+      --accent: #a855f7;
+      --accent-light: #c084fc;
+      --tag-color: #c4b5fd;
+      --footer-color: #9ca3af;
+      --btn-text: #ffffff;
+    }
+
+    body.day {
+      --bg-gradient: linear-gradient(-45deg, #e0e7ff, #c7d2fe, #a5b4fc, #e0e7ff);
+      --card-bg: rgba(255, 255, 255, 0.75);
+      --text-main: #1e1b4b;
+      --text-secondary: #4b5563;
+      --accent: #7c3aed;
+      --accent-light: #8b5cf6;
+      --tag-color: #6d28d9;
+      --footer-color: #6b7280;
+      --btn-text: #ffffff;
+    }
+
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #0f0c29);
+      background: var(--bg-gradient);
       background-size: 400% 400%;
       animation: gradientBG 15s ease infinite;
-      color: #fff;
+      color: var(--text-main);
       text-align: center;
       overflow: hidden;
       height: 100vh;
       position: relative;
+      transition: all 0.5s ease;
     }
 
     @keyframes gradientBG {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
+    }
+
+    /* ====== BIG ROTATING NAME IN BACKGROUND ====== */
+    .bg-name {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 18vw;
+      font-weight: 900;
+      letter-spacing: 15px;
+      white-space: nowrap;
+      opacity: 0.08;
+      z-index: 0;
+      pointer-events: none;
+      animation: rotateName 25s linear infinite, colorCycle 8s ease-in-out infinite;
+      user-select: none;
+    }
+
+    .bg-name-left {
+      left: 15%;
+      font-size: 14vw;
+      opacity: 0.07;
+      animation: rotateNameReverse 30s linear infinite, colorCycle 10s ease-in-out infinite;
+    }
+
+    .bg-name-right {
+      left: 85%;
+      font-size: 14vw;
+      opacity: 0.07;
+      animation: rotateName 28s linear infinite, colorCycle 9s ease-in-out infinite;
+    }
+
+    @keyframes rotateName {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to   { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    @keyframes rotateNameReverse {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to   { transform: translate(-50%, -50%) rotate(-360deg); }
+    }
+
+    @keyframes colorCycle {
+      0%   { color: #a855f7; }
+      33%  { color: #ec4899; }
+      66%  { color: #3b82f6; }
+      100% { color: #a855f7; }
+    }
+
+    body.day .bg-name,
+    body.day .bg-name-left,
+    body.day .bg-name-right {
+      opacity: 0.12;
     }
 
     #particles-js {
@@ -56,29 +132,34 @@
       margin: auto;
       padding: 30px 25px;
       border-radius: 24px;
-      background: rgba(15, 12, 41, 0.55);
+      background: var(--card-bg);
       backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 0 50px rgba(138, 43, 226, 0.25);
-      z-index: 1;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 50px rgba(168, 85, 247, 0.25);
+      z-index: 2;
+      transition: all 0.4s ease;
+    }
+
+    body.day .card {
+      border: 1px solid rgba(124, 58, 237, 0.2);
+      box-shadow: 0 10px 40px rgba(124, 58, 237, 0.15);
     }
 
     .avatar {
       width: 140px;
       height: 140px;
       border-radius: 50%;
-      border: 3px solid #a855f7;
-      box-shadow: 0 0 30px #a855f7, 0 0 60px rgba(168, 85, 247, 0.4);
+      border: 3px solid var(--accent);
+      box-shadow: 0 0 30px var(--accent), 0 0 60px rgba(168, 85, 247, 0.4);
       animation: glow 3s infinite alternate;
       object-fit: cover;
     }
 
     @keyframes glow {
-      from { box-shadow: 0 0 15px #a855f7, 0 0 30px rgba(168, 85, 247, 0.3); }
-      to   { box-shadow: 0 0 40px #c084fc, 0 0 70px rgba(192, 132, 252, 0.5); }
+      from { box-shadow: 0 0 15px var(--accent), 0 0 30px rgba(168, 85, 247, 0.3); }
+      to   { box-shadow: 0 0 40px var(--accent-light), 0 0 70px rgba(192, 132, 252, 0.5); }
     }
 
-    /* ====== SUPER COOL NAME ANIMATION ====== */
     .name {
       margin-top: 18px;
       font-size: 2.4rem;
@@ -99,6 +180,13 @@
       animation: textGlow 4s linear infinite, bounce 2.5s ease-in-out infinite;
     }
 
+    body.day .name span {
+      background: linear-gradient(90deg, #7c3aed, #a855f7, #c084fc, #7c3aed);
+      background-size: 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
     .name span:nth-child(1) { animation-delay: 0.0s; }
     .name span:nth-child(2) { animation-delay: 0.1s; }
     .name span:nth-child(3) { animation-delay: 0.2s; }
@@ -117,7 +205,7 @@
     }
 
     .tag {
-      color: #c4b5fd;
+      color: var(--tag-color);
       font-size: 1.05rem;
       margin-top: 6px;
       letter-spacing: 1px;
@@ -126,26 +214,23 @@
     .about {
       margin: 14px 0 20px;
       font-size: 0.98rem;
-      color: #d1d5db;
+      color: var(--text-secondary);
       line-height: 1.5;
     }
 
-    .social {
-      margin: 18px 0;
-    }
-
     .social a {
-      color: #e9d5ff;
+      color: var(--text-main);
       margin: 0 12px;
       font-size: 1.55rem;
       transition: all 0.3s ease;
       display: inline-block;
+      opacity: 0.9;
     }
 
     .social a:hover {
-      color: #c084fc;
+      color: var(--accent);
       transform: translateY(-5px) scale(1.2);
-      text-shadow: 0 0 15px #c084fc;
+      text-shadow: 0 0 15px var(--accent);
     }
 
     .buttons {
@@ -157,8 +242,8 @@
       padding: 11px 26px;
       border-radius: 12px;
       text-decoration: none;
-      color: #fff;
-      background: linear-gradient(135deg, #a855f7, #7c3aed);
+      color: var(--btn-text);
+      background: linear-gradient(135deg, var(--accent), #7c3aed);
       margin: 8px;
       font-weight: 600;
       font-size: 0.95rem;
@@ -168,8 +253,8 @@
 
     .btn.outline {
       background: transparent;
-      border: 2px solid #a855f7;
-      color: #e9d5ff;
+      border: 2px solid var(--accent);
+      color: var(--text-main);
     }
 
     .btn:hover {
@@ -186,32 +271,69 @@
       bottom: 14px;
       width: 100%;
       text-align: center;
-      color: #9ca3af;
+      color: var(--footer-color);
       font-size: 0.85rem;
-      z-index: 1;
+      z-index: 2;
     }
 
     footer strong {
-      color: #c084fc;
+      color: var(--accent-light);
     }
 
-    /* Mobile tweaks */
+    /* Toggle Button */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--card-bg);
+      border: 2px solid var(--accent);
+      color: var(--text-main);
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px var(--accent);
+    }
+
     @media (max-width: 480px) {
       .name { font-size: 2rem; letter-spacing: 2px; }
       .card { padding: 25px 18px; }
+      .bg-name { font-size: 22vw; }
+      .bg-name-left, .bg-name-right { font-size: 16vw; }
     }
   </style>
 </head>
 
 <body>
-  <!-- Particles Background -->
+  <!-- Big rotating names in background -->
+  <div class="bg-name">GOVIND</div>
+  <div class="bg-name bg-name-left">GOVIND</div>
+  <div class="bg-name bg-name-right">GOVIND</div>
+
+  <!-- Particles -->
   <div id="particles-js"></div>
+
+  <!-- Theme Toggle Button -->
+  <button class="theme-toggle" id="themeToggle" title="Toggle Day/Night Mode">
+    <i class="fas fa-moon"></i>
+  </button>
 
   <!-- Main Card -->
   <div class="card">
     <img src="https://graph.org/file/0471decf208b82b1a9e58.jpg" class="avatar" alt="Govind" />
     
-    <!-- Cool animated name -->
     <h1 class="name">
       <span>G</span><span>O</span><span>V</span><span>I</span><span>N</span><span>D</span>
     </h1>
@@ -237,30 +359,29 @@
 
   <footer>⚡ Designed & Animated by <strong>GOVIND</strong></footer>
 
-  <!-- Particles Config -->
   <script>
+    // Particles
     particlesJS("particles-js", {
       particles: {
-        number: { value: 80, density: { enable: true, value_area: 800 } },
+        number: { value: 70, density: { enable: true, value_area: 800 } },
         color: { value: "#c084fc" },
         shape: { type: "circle" },
-        opacity: { value: 0.45, random: true },
+        opacity: { value: 0.4, random: true },
         size: { value: 3, random: true },
         line_linked: {
           enable: true,
           distance: 140,
           color: "#a855f7",
-          opacity: 0.25,
+          opacity: 0.2,
           width: 1
         },
         move: {
           enable: true,
-          speed: 1.8,
+          speed: 1.6,
           direction: "none",
           random: true,
           straight: false,
-          out_mode: "out",
-          bounce: false
+          out_mode: "out"
         }
       },
       interactivity: {
@@ -272,10 +393,36 @@
         },
         modes: {
           repulse: { distance: 100, duration: 0.4 },
-          push: { particles_nb: 4 }
+          push: { particles_nb: 3 }
         }
       },
       retina_detect: true
+    });
+
+    // Day / Night Mode Toggle
+    const toggleBtn = document.getElementById('themeToggle');
+    const body = document.body;
+    const icon = toggleBtn.querySelector('i');
+
+    // Check saved preference
+    if (localStorage.getItem('theme') === 'day') {
+      body.classList.add('day');
+      icon.classList.remove('fa-moon');
+      icon.classList.add('fa-sun');
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      body.classList.toggle('day');
+      
+      if (body.classList.contains('day')) {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+        localStorage.setItem('theme', 'day');
+      } else {
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+        localStorage.setItem('theme', 'night');
+      }
     });
   </script>
 </body>
