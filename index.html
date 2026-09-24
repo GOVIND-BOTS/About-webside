@@ -3,427 +3,448 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Govind — Telegram Bot Developer | Creator | Python & Pyrogram Expert" />
-  <meta name="author" content="Govind" />
   <title>GOVIND | Developer Portfolio</title>
-
-  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/179/179309.png" type="image/x-icon" />
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/179/179309.png" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;900&display=swap" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --bg-gradient: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #0f0c29);
-      --card-bg: rgba(15, 12, 41, 0.55);
-      --text-main: #ffffff;
-      --text-secondary: #d1d5db;
-      --accent: #a855f7;
-      --accent-light: #c084fc;
-      --tag-color: #c4b5fd;
-      --footer-color: #9ca3af;
-      --btn-text: #ffffff;
-    }
-
-    body.day {
-      --bg-gradient: linear-gradient(-45deg, #e0e7ff, #c7d2fe, #a5b4fc, #e0e7ff);
-      --card-bg: rgba(255, 255, 255, 0.75);
-      --text-main: #1e1b4b;
-      --text-secondary: #4b5563;
-      --accent: #7c3aed;
-      --accent-light: #8b5cf6;
-      --tag-color: #6d28d9;
-      --footer-color: #6b7280;
-      --btn-text: #ffffff;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Poppins', sans-serif;
-      background: var(--bg-gradient);
-      background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
-      color: var(--text-main);
-      text-align: center;
       overflow: hidden;
       height: 100vh;
-      position: relative;
-      transition: all 0.5s ease;
+      color: white;
     }
 
-    @keyframes gradientBG {
+    /* ========== COMMON ========== */
+    .page {
+      position: absolute;
+      inset: 0;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      transition: all 0.6s ease;
+      z-index: 1;
+    }
+    .page.active { display: flex; }
+
+    .card {
+      width: 90%;
+      max-width: 420px;
+      padding: 30px 25px;
+      border-radius: 24px;
+      backdrop-filter: blur(16px);
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .avatar {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+    }
+
+    .name {
+      font-size: 2.3rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      margin: 10px 0 5px;
+    }
+
+    .tag { font-size: 1rem; opacity: 0.85; margin-bottom: 12px; }
+    .about { font-size: 0.95rem; line-height: 1.5; margin-bottom: 18px; opacity: 0.9; }
+
+    .social {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin: 18px 0;
+      flex-wrap: wrap;
+    }
+    .social a {
+      font-size: 1.5rem;
+      color: white;
+      transition: 0.3s;
+    }
+    .social a:hover { transform: scale(1.25) translateY(-4px); }
+
+    .buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .btn {
+      padding: 11px 24px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: 0.3s;
+      border: none;
+      cursor: pointer;
+      color: white;
+    }
+    .btn:hover { transform: translateY(-3px); }
+
+    /* Navigation */
+    .nav {
+      position: fixed;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 100;
+      background: rgba(0,0,0,0.4);
+      padding: 10px 18px;
+      border-radius: 50px;
+      backdrop-filter: blur(10px);
+    }
+    .nav-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.4);
+      background: transparent;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .nav-btn.active, .nav-btn:hover {
+      background: white;
+      color: #000;
+      border-color: white;
+    }
+
+    /* ========== PAGE 1 - HOME (Purple) ========== */
+    #page1 {
+      background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e);
+      background-size: 400% 400%;
+      animation: gradient 12s ease infinite;
+    }
+    #page1 .card {
+      background: rgba(15,12,41,0.6);
+      border: 1px solid rgba(168,85,247,0.3);
+      box-shadow: 0 0 40px rgba(168,85,247,0.3);
+    }
+    #page1 .avatar { border: 3px solid #a855f7; box-shadow: 0 0 25px #a855f7; }
+    #page1 .name {
+      background: linear-gradient(90deg, #c084fc, #e879f9, #f0abfc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: glowText 3s ease infinite;
+    }
+    #page1 .btn { background: linear-gradient(135deg, #a855f7, #7c3aed); }
+    #page1 .btn.outline { background: transparent; border: 2px solid #a855f7; }
+
+    /* ========== PAGE 2 - ABOUT (Cyan/Blue) ========== */
+    #page2 {
+      background: linear-gradient(-45deg, #0c4a6e, #0369a1, #0e7490);
+      background-size: 400% 400%;
+      animation: gradient 12s ease infinite;
+    }
+    #page2 .card {
+      background: rgba(8,47,73,0.65);
+      border: 1px solid rgba(34,211,238,0.3);
+      box-shadow: 0 0 40px rgba(34,211,238,0.25);
+    }
+    #page2 .avatar { border: 3px solid #22d3ee; box-shadow: 0 0 25px #22d3ee; }
+    #page2 .name {
+      color: #67e8f9;
+      text-shadow: 0 0 20px #22d3ee;
+      animation: pulse 2s ease infinite;
+    }
+    #page2 .btn { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+    #page2 .btn.outline { background: transparent; border: 2px solid #22d3ee; }
+
+    /* ========== PAGE 3 - SKILLS (Green) ========== */
+    #page3 {
+      background: linear-gradient(-45deg, #064e3b, #065f46, #047857);
+      background-size: 400% 400%;
+      animation: gradient 12s ease infinite;
+    }
+    #page3 .card {
+      background: rgba(6,78,59,0.65);
+      border: 1px solid rgba(52,211,153,0.3);
+      box-shadow: 0 0 40px rgba(52,211,153,0.25);
+    }
+    #page3 .avatar { border: 3px solid #34d399; box-shadow: 0 0 25px #34d399; }
+    #page3 .name {
+      background: linear-gradient(90deg, #6ee7b7, #34d399, #10b981);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 4px;
+    }
+    #page3 .btn { background: linear-gradient(135deg, #10b981, #059669); }
+    #page3 .btn.outline { background: transparent; border: 2px solid #34d399; }
+
+    /* ========== PAGE 4 - PROJECTS (Orange) ========== */
+    #page4 {
+      background: linear-gradient(-45deg, #7c2d12, #9a3412, #c2410c);
+      background-size: 400% 400%;
+      animation: gradient 12s ease infinite;
+    }
+    #page4 .card {
+      background: rgba(124,45,18,0.65);
+      border: 1px solid rgba(251,146,60,0.3);
+      box-shadow: 0 0 40px rgba(251,146,60,0.25);
+    }
+    #page4 .avatar { border: 3px solid #fb923c; box-shadow: 0 0 25px #fb923c; }
+    #page4 .name {
+      color: #fdba74;
+      animation: bounce 2.5s ease infinite;
+    }
+    #page4 .btn { background: linear-gradient(135deg, #f97316, #ea580c); }
+    #page4 .btn.outline { background: transparent; border: 2px solid #fb923c; }
+
+    /* ========== PAGE 5 - CONTACT (Pink/Red) ========== */
+    #page5 {
+      background: linear-gradient(-45deg, #831843, #9d174d, #be123c);
+      background-size: 400% 400%;
+      animation: gradient 12s ease infinite;
+    }
+    #page5 .card {
+      background: rgba(131,24,67,0.65);
+      border: 1px solid rgba(244,114,182,0.3);
+      box-shadow: 0 0 40px rgba(244,114,182,0.25);
+    }
+    #page5 .avatar { border: 3px solid #f472b6; box-shadow: 0 0 25px #f472b6; }
+    #page5 .name {
+      background: linear-gradient(90deg, #f9a8d4, #f472b6, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: glowText 3s ease infinite;
+    }
+    #page5 .btn { background: linear-gradient(135deg, #ec4899, #db2777); }
+    #page5 .btn.outline { background: transparent; border: 2px solid #f472b6; }
+
+    .contact-info {
+      margin: 15px 0;
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+    .contact-info a {
+      color: #f9a8d4;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .contact-info a:hover { text-decoration: underline; }
+
+    /* Animations */
+    @keyframes gradient {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-
-    /* ====== BIG ROTATING NAME IN BACKGROUND ====== */
-    .bg-name {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 18vw;
-      font-weight: 900;
-      letter-spacing: 15px;
-      white-space: nowrap;
-      opacity: 0.08;
-      z-index: 0;
-      pointer-events: none;
-      animation: rotateName 25s linear infinite, colorCycle 8s ease-in-out infinite;
-      user-select: none;
+    @keyframes glowText {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.3); }
     }
-
-    .bg-name-left {
-      left: 15%;
-      font-size: 14vw;
-      opacity: 0.07;
-      animation: rotateNameReverse 30s linear infinite, colorCycle 10s ease-in-out infinite;
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
     }
-
-    .bg-name-right {
-      left: 85%;
-      font-size: 14vw;
-      opacity: 0.07;
-      animation: rotateName 28s linear infinite, colorCycle 9s ease-in-out infinite;
-    }
-
-    @keyframes rotateName {
-      from { transform: translate(-50%, -50%) rotate(0deg); }
-      to   { transform: translate(-50%, -50%) rotate(360deg); }
-    }
-
-    @keyframes rotateNameReverse {
-      from { transform: translate(-50%, -50%) rotate(0deg); }
-      to   { transform: translate(-50%, -50%) rotate(-360deg); }
-    }
-
-    @keyframes colorCycle {
-      0%   { color: #a855f7; }
-      33%  { color: #ec4899; }
-      66%  { color: #3b82f6; }
-      100% { color: #a855f7; }
-    }
-
-    body.day .bg-name,
-    body.day .bg-name-left,
-    body.day .bg-name-right {
-      opacity: 0.12;
-    }
-
-    #particles-js {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-    }
-
-    .card {
-      position: relative;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 90%;
-      max-width: 420px;
-      margin: auto;
-      padding: 30px 25px;
-      border-radius: 24px;
-      background: var(--card-bg);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 0 50px rgba(168, 85, 247, 0.25);
-      z-index: 2;
-      transition: all 0.4s ease;
-    }
-
-    body.day .card {
-      border: 1px solid rgba(124, 58, 237, 0.2);
-      box-shadow: 0 10px 40px rgba(124, 58, 237, 0.15);
-    }
-
-    .avatar {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      border: 3px solid var(--accent);
-      box-shadow: 0 0 30px var(--accent), 0 0 60px rgba(168, 85, 247, 0.4);
-      animation: glow 3s infinite alternate;
-      object-fit: cover;
-    }
-
-    @keyframes glow {
-      from { box-shadow: 0 0 15px var(--accent), 0 0 30px rgba(168, 85, 247, 0.3); }
-      to   { box-shadow: 0 0 40px var(--accent-light), 0 0 70px rgba(192, 132, 252, 0.5); }
-    }
-
-    .name {
-      margin-top: 18px;
-      font-size: 2.4rem;
-      font-weight: 900;
-      letter-spacing: 3px;
-      display: flex;
-      justify-content: center;
-      gap: 4px;
-      flex-wrap: wrap;
-    }
-
-    .name span {
-      display: inline-block;
-      background: linear-gradient(90deg, #c084fc, #e879f9, #f0abfc, #c084fc);
-      background-size: 300%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: textGlow 4s linear infinite, bounce 2.5s ease-in-out infinite;
-    }
-
-    body.day .name span {
-      background: linear-gradient(90deg, #7c3aed, #a855f7, #c084fc, #7c3aed);
-      background-size: 300%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .name span:nth-child(1) { animation-delay: 0.0s; }
-    .name span:nth-child(2) { animation-delay: 0.1s; }
-    .name span:nth-child(3) { animation-delay: 0.2s; }
-    .name span:nth-child(4) { animation-delay: 0.3s; }
-    .name span:nth-child(5) { animation-delay: 0.4s; }
-    .name span:nth-child(6) { animation-delay: 0.5s; }
-
-    @keyframes textGlow {
-      0%   { background-position: 0%; }
-      100% { background-position: 300%; }
-    }
-
     @keyframes bounce {
-      0%, 100% { transform: translateY(0) scale(1); }
-      50%      { transform: translateY(-8px) scale(1.08); }
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
     }
 
-    .tag {
-      color: var(--tag-color);
-      font-size: 1.05rem;
-      margin-top: 6px;
-      letter-spacing: 1px;
-    }
-
-    .about {
-      margin: 14px 0 20px;
-      font-size: 0.98rem;
-      color: var(--text-secondary);
-      line-height: 1.5;
-    }
-
-    .social a {
-      color: var(--text-main);
-      margin: 0 12px;
-      font-size: 1.55rem;
-      transition: all 0.3s ease;
-      display: inline-block;
-      opacity: 0.9;
-    }
-
-    .social a:hover {
-      color: var(--accent);
-      transform: translateY(-5px) scale(1.2);
-      text-shadow: 0 0 15px var(--accent);
-    }
-
-    .buttons {
-      margin-top: 10px;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 11px 26px;
-      border-radius: 12px;
-      text-decoration: none;
-      color: var(--btn-text);
-      background: linear-gradient(135deg, var(--accent), #7c3aed);
-      margin: 8px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      transition: all 0.3s ease;
-      border: none;
-    }
-
-    .btn.outline {
-      background: transparent;
-      border: 2px solid var(--accent);
-      color: var(--text-main);
-    }
-
-    .btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(168, 85, 247, 0.5);
-    }
-
-    .btn.outline:hover {
-      background: rgba(168, 85, 247, 0.15);
-    }
-
-    footer {
-      position: absolute;
-      bottom: 14px;
-      width: 100%;
-      text-align: center;
-      color: var(--footer-color);
-      font-size: 0.85rem;
-      z-index: 2;
-    }
-
-    footer strong {
-      color: var(--accent-light);
-    }
-
-    /* Toggle Button */
-    .theme-toggle {
+    /* Particles */
+    #particles-js {
       position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 100;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: var(--card-bg);
-      border: 2px solid var(--accent);
-      color: var(--text-main);
-      font-size: 1.3rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    }
-
-    .theme-toggle:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 20px var(--accent);
-    }
-
-    @media (max-width: 480px) {
-      .name { font-size: 2rem; letter-spacing: 2px; }
-      .card { padding: 25px 18px; }
-      .bg-name { font-size: 22vw; }
-      .bg-name-left, .bg-name-right { font-size: 16vw; }
+      inset: 0;
+      z-index: 0;
     }
   </style>
 </head>
-
 <body>
-  <!-- Big rotating names in background -->
-  <div class="bg-name">GOVIND</div>
-  <div class="bg-name bg-name-left">GOVIND</div>
-  <div class="bg-name bg-name-right">GOVIND</div>
 
-  <!-- Particles -->
   <div id="particles-js"></div>
 
-  <!-- Theme Toggle Button -->
-  <button class="theme-toggle" id="themeToggle" title="Toggle Day/Night Mode">
-    <i class="fas fa-moon"></i>
-  </button>
+  <!-- ==================== PAGE 1 : HOME ==================== -->
+  <div class="page active" id="page1">
+    <div class="card">
+      <img src="https://graph.org/file/0471decf208b82b1a9e58.jpg" class="avatar" alt="Govind">
+      <h1 class="name">GOVIND</h1>
+      <p class="tag">@GOVIND-BOTS</p>
+      <p class="about">💻 Telegram Bot Developer | Python | Pyrogram<br>⚡ Building automation with creativity</p>
 
-  <!-- Main Card -->
-  <div class="card">
-    <img src="https://graph.org/file/0471decf208b82b1a9e58.jpg" class="avatar" alt="Govind" />
-    
-    <h1 class="name">
-      <span>G</span><span>O</span><span>V</span><span>I</span><span>N</span><span>D</span>
-    </h1>
+      <div class="social">
+        <a href="https://github.com/GOVIND-BOTS" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://telegram.dog/govind_official_mp13" target="_blank"><i class="fab fa-telegram"></i></a>
+        <a href="https://instagram.com/govind__official_mp" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/share/19WKnx52wk/" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="mailto:govindofficialmp@gmail.com"><i class="fas fa-envelope"></i></a>
+        <a href="tel:+919713856013"><i class="fas fa-phone"></i></a>
+      </div>
 
-    <p class="tag">@GOVIND-BOTS</p>
-    
-    <p class="about">
-      💻 Telegram Bot Developer | Python | Pyrogram<br>
-      ⚡ Building automation with creativity
-    </p>
-
-    <div class="social">
-      <a href="https://github.com/GOVIND-BOTS" target="_blank"><i class="fab fa-github"></i></a>
-      <a href="https://telegram.dog/govind_official_mp13" target="_blank"><i class="fab fa-telegram"></i></a>
-      <a href="https://instagram.com/govind__official_mp" target="_blank"><i class="fab fa-instagram"></i></a>
-    </div>
-
-    <div class="buttons">
-      <a href="https://instagram.com/govind__official_mp" class="btn" target="_blank">Follow</a>
-      <a href="https://github.com/GOVIND-BOTS?tab=repositories" class="btn outline" target="_blank">More</a>
+      <div class="buttons">
+        <a href="https://instagram.com/govind__official_mp" class="btn" target="_blank">Follow</a>
+        <button class="btn outline" onclick="goToPage(2)">Next →</button>
+      </div>
     </div>
   </div>
 
-  <footer>⚡ Designed & Animated by <strong>GOVIND</strong></footer>
+  <!-- ==================== PAGE 2 : ABOUT ==================== -->
+  <div class="page" id="page2">
+    <div class="card">
+      <img src="https://graph.org/file/0471decf208b82b1a9e58.jpg" class="avatar" alt="Govind">
+      <h1 class="name">GOVIND</h1>
+      <p class="tag">About Me</p>
+      <p class="about">
+        Passionate Telegram Bot Developer from India.<br>
+        Love creating smart automation tools using Python & Pyrogram.<br>
+        Always learning & building cool stuff 🚀
+      </p>
+
+      <div class="social">
+        <a href="https://github.com/GOVIND-BOTS" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://telegram.dog/govind_official_mp13" target="_blank"><i class="fab fa-telegram"></i></a>
+        <a href="https://instagram.com/govind__official_mp" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/share/19WKnx52wk/" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="mailto:govindofficialmp@gmail.com"><i class="fas fa-envelope"></i></a>
+        <a href="tel:+919713856013"><i class="fas fa-phone"></i></a>
+      </div>
+
+      <div class="buttons">
+        <button class="btn outline" onclick="goToPage(1)">← Prev</button>
+        <button class="btn" onclick="goToPage(3)">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 3 : SKILLS ==================== -->
+  <div class="page" id="page3">
+    <div class="card">
+      <img src="https://graph.org/file/0471decf208b82b1a9e58.jpg" class="avatar" alt="Govind">
+      <h1 class="name">GOVIND</h1>
+      <p class="tag">My Skills</p>
+      <p class="about">
+        ✅ Python & Pyrogram<br>
+        ✅ Telegram Bot Development<br>
+        ✅ Automation & Scraping<br>
+        ✅ API Integration<br>
+        ✅ Git & GitHub
+      </p>
+
+      <div class="social">
+        <a href="https://github.com/GOVIND-BOTS" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://telegram.dog/govind_official_mp13" target="_blank"><i class="fab fa-telegram"></i></a>
+        <a href="https://instagram.com/govind__official_mp" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/share/19WKnx52wk/" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="mailto:govindofficialmp@gmail.com"><i class="fas fa-envelope"></i></a>
+        <a href="tel:+919713856013"><i class="fas fa-phone"></i></a>
+      </div>
+
+      <div class="buttons">
+        <button class="btn outline" onclick="goToPage(2)">← Prev</button>
+        <button class="btn" onclick="goToPage(4)">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 4 : PROJECTS ==================== -->
+  <div class="page" id="page4">
+    <div class="card">
+      <img src="https://graph.org/file/0471decf208b82b1a9e58.jpg" class="avatar" alt="Govind">
+      <h1 class="name">GOVIND</h1>
+      <p class="tag">Projects</p>
+      <p class="about">
+        🔥 Multiple Telegram Bots<br>
+        🔥 Auto Poster & Scrapers<br>
+        🔥 Custom Automation Tools<br>
+        🔥 Open Source Projects on GitHub
+      </p>
+
+      <div class="social">
+        <a href="https://github.com/GOVIND-BOTS" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://telegram.dog/govind_official_mp13" target="_blank"><i class="fab fa-telegram"></i></a>
+        <a href="https://instagram.com/govind__official_mp" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/share/19WKnx52wk/" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="mailto:govindofficialmp@gmail.com"><i class="fas fa-envelope"></i></a>
+        <a href="tel:+919713856013"><i class="fas fa-phone"></i></a>
+      </div>
+
+      <div class="buttons">
+        <button class="btn outline" onclick="goToPage(3)">← Prev</button>
+        <button class="btn" onclick="goToPage(5)">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 5 : CONTACT ==================== -->
+  <div class="page" id="page5">
+    <div class="card">
+      <img src="https://graph.org/file/0471decf208b82b1a9e58.jpg" class="avatar" alt="Govind">
+      <h1 class="name">GOVIND</h1>
+      <p class="tag">Get In Touch</p>
+
+      <div class="contact-info">
+        📧 <a href="mailto:govindofficialmp@gmail.com">govindofficialmp@gmail.com</a><br>
+        📱 <a href="tel:+919713856013">+91 9713856013</a><br>
+        📷 Instagram: @govind__official_mp<br>
+        📘 Facebook: govind official
+      </div>
+
+      <div class="social">
+        <a href="https://github.com/GOVIND-BOTS" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://telegram.dog/govind_official_mp13" target="_blank"><i class="fab fa-telegram"></i></a>
+        <a href="https://instagram.com/govind__official_mp" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/share/19WKnx52wk/" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="mailto:govindofficialmp@gmail.com"><i class="fas fa-envelope"></i></a>
+        <a href="tel:+919713856013"><i class="fas fa-phone"></i></a>
+      </div>
+
+      <div class="buttons">
+        <button class="btn outline" onclick="goToPage(4)">← Prev</button>
+        <button class="btn" onclick="goToPage(1)">Home</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div class="nav">
+    <button class="nav-btn active" onclick="goToPage(1)">1</button>
+    <button class="nav-btn" onclick="goToPage(2)">2</button>
+    <button class="nav-btn" onclick="goToPage(3)">3</button>
+    <button class="nav-btn" onclick="goToPage(4)">4</button>
+    <button class="nav-btn" onclick="goToPage(5)">5</button>
+  </div>
 
   <script>
     // Particles
     particlesJS("particles-js", {
       particles: {
-        number: { value: 70, density: { enable: true, value_area: 800 } },
-        color: { value: "#c084fc" },
+        number: { value: 60 },
+        color: { value: "#ffffff" },
         shape: { type: "circle" },
-        opacity: { value: 0.4, random: true },
-        size: { value: 3, random: true },
-        line_linked: {
-          enable: true,
-          distance: 140,
-          color: "#a855f7",
-          opacity: 0.2,
-          width: 1
-        },
-        move: {
-          enable: true,
-          speed: 1.6,
-          direction: "none",
-          random: true,
-          straight: false,
-          out_mode: "out"
-        }
+        opacity: { value: 0.3 },
+        size: { value: 2.5 },
+        move: { enable: true, speed: 1.5 }
       },
       interactivity: {
-        detect_on: "canvas",
-        events: {
-          onhover: { enable: true, mode: "repulse" },
-          onclick: { enable: true, mode: "push" },
-          resize: true
-        },
-        modes: {
-          repulse: { distance: 100, duration: 0.4 },
-          push: { particles_nb: 3 }
-        }
-      },
-      retina_detect: true
-    });
-
-    // Day / Night Mode Toggle
-    const toggleBtn = document.getElementById('themeToggle');
-    const body = document.body;
-    const icon = toggleBtn.querySelector('i');
-
-    // Check saved preference
-    if (localStorage.getItem('theme') === 'day') {
-      body.classList.add('day');
-      icon.classList.remove('fa-moon');
-      icon.classList.add('fa-sun');
-    }
-
-    toggleBtn.addEventListener('click', () => {
-      body.classList.toggle('day');
-      
-      if (body.classList.contains('day')) {
-        icon.classList.remove('fa-moon');
-        icon.classList.add('fa-sun');
-        localStorage.setItem('theme', 'day');
-      } else {
-        icon.classList.remove('fa-sun');
-        icon.classList.add('fa-moon');
-        localStorage.setItem('theme', 'night');
+        events: { onhover: { enable: true, mode: "repulse" } }
       }
     });
+
+    // Page Switcher
+    function goToPage(num) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page' + num).classList.add('active');
+
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.nav-btn')[num - 1].classList.add('active');
+    }
   </script>
 </body>
 </html>
