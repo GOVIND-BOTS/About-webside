@@ -14,23 +14,23 @@
     
     :root {
       --text: #ffffff;
-      --card-bg: rgba(15, 12, 41, 0.6);
+      --card-bg: rgba(15, 12, 41, 0.65);
     }
     
     body.day {
       --text: #1e1b4b;
-      --card-bg: rgba(255, 255, 255, 0.85);
+      --card-bg: rgba(255, 255, 255, 0.9);
     }
 
     body {
       font-family: 'Poppins', sans-serif;
-      overflow: hidden;
-      height: 100vh;
+      overflow-x: hidden;
+      min-height: 100vh;
       color: var(--text);
       transition: all 0.4s ease;
     }
 
-    /* ========== WELCOME SCREEN ========== */
+    /* Welcome Screen */
     #welcome-screen {
       position: fixed;
       inset: 0;
@@ -42,27 +42,23 @@
       z-index: 9999;
       transition: opacity 0.9s ease, visibility 0.9s ease;
     }
-
     #welcome-screen.hide {
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
     }
-
     .big-heart {
       font-size: 100px;
       animation: heartbeat 1.5s ease-in-out infinite;
       margin-bottom: 15px;
       filter: drop-shadow(0 0 30px #ff2d55);
     }
-
     @keyframes heartbeat {
       0%, 100% { transform: scale(1); }
       15% { transform: scale(1.25); }
       30% { transform: scale(1); }
       45% { transform: scale(1.15); }
     }
-
     .welcome-text {
       font-size: 2.4rem;
       font-weight: 800;
@@ -74,20 +70,17 @@
       -webkit-text-fill-color: transparent;
       animation: gradientText 4s linear infinite, fadeInUp 1s ease;
     }
-
     @keyframes gradientText {
       0% { background-position: 0%; }
       100% { background-position: 300%; }
     }
-
     .welcome-sub {
       font-size: 1.15rem;
       color: #d1d5db;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
       letter-spacing: 2px;
       animation: fadeInUp 1.2s ease;
     }
-
     .welcome-line {
       font-size: 0.95rem;
       color: #a78bfa;
@@ -95,7 +88,6 @@
       font-style: italic;
       animation: fadeInUp 1.3s ease;
     }
-
     .open-door-btn {
       padding: 16px 42px;
       font-size: 1.15rem;
@@ -108,33 +100,24 @@
       cursor: pointer;
       box-shadow: 0 10px 35px rgba(236, 72, 153, 0.45);
       transition: all 0.3s ease;
-      animation: fadeInUp 1.5s ease, btnGlow 3s ease infinite;
+      animation: fadeInUp 1.5s ease;
     }
-
-    @keyframes btnGlow {
-      0%, 100% { box-shadow: 0 10px 35px rgba(236, 72, 153, 0.45); }
-      50% { box-shadow: 0 10px 45px rgba(139, 92, 246, 0.6); }
-    }
-
     .open-door-btn:hover {
       transform: translateY(-5px) scale(1.05);
       background-position: 100%;
     }
-
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* ========== MAIN CONTENT ========== */
     #main-content {
       opacity: 0;
       transition: opacity 0.9s ease;
-      height: 100vh;
+      min-height: 100vh;
     }
     #main-content.show { opacity: 1; }
 
-    /* Theme Toggle */
     .theme-toggle {
       position: fixed;
       top: 18px;
@@ -156,30 +139,35 @@
     }
     .theme-toggle:hover { transform: scale(1.1); }
 
-    /* Shayari on top */
+    /* Fancy Shayari */
     .shayari {
       position: absolute;
-      top: 45px;
+      top: 40px;
       left: 50%;
       transform: translateX(-50%);
-      width: 90%;
-      max-width: 420px;
+      width: 92%;
+      max-width: 440px;
       text-align: center;
-      font-size: 0.95rem;
-      font-weight: 500;
+      font-size: 1.15rem;
+      font-weight: 800;
       line-height: 1.5;
-      opacity: 0.9;
       z-index: 5;
-      animation: shayariFloat 4s ease-in-out infinite;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      background: linear-gradient(90deg, #f472b6, #c084fc, #60a5fa, #34d399, #f472b6);
+      background-size: 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shayariColor 5s linear infinite, shayariFloat 4s ease-in-out infinite;
+      text-shadow: 0 0 20px rgba(192,132,252,0.3);
     }
-
+    @keyframes shayariColor {
+      0% { background-position: 0%; }
+      100% { background-position: 300%; }
+    }
     @keyframes shayariFloat {
       0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(-6px); }
+      50% { transform: translateX(-50%) translateY(-7px); }
     }
 
-    /* Pages */
     .page {
       position: absolute;
       inset: 0;
@@ -189,49 +177,48 @@
       justify-content: center;
       padding: 20px;
       z-index: 1;
+      overflow-y: auto;
     }
     .page.active { display: flex; }
 
     .card {
       width: 90%;
       max-width: 420px;
-      padding: 28px 24px;
+      padding: 26px 22px;
       border-radius: 24px;
       backdrop-filter: blur(16px);
       text-align: center;
       position: relative;
       z-index: 2;
       background: var(--card-bg);
-      transition: 0.4s;
+      margin-top: 70px;
     }
 
     .avatar {
-      width: 125px;
-      height: 125px;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
       object-fit: cover;
       margin-bottom: 12px;
     }
-
     .name {
-      font-size: 2.2rem;
+      font-size: 2.15rem;
       font-weight: 900;
       letter-spacing: 2px;
       margin: 8px 0 4px;
     }
-
     .tag { font-size: 0.95rem; opacity: 0.85; margin-bottom: 10px; }
-    .about { font-size: 0.92rem; line-height: 1.5; margin-bottom: 16px; opacity: 0.9; }
+    .about { font-size: 0.92rem; line-height: 1.5; margin-bottom: 14px; opacity: 0.9; }
 
     .social {
       display: flex;
       justify-content: center;
-      gap: 15px;
-      margin: 16px 0;
+      gap: 14px;
+      margin: 14px 0;
       flex-wrap: wrap;
     }
     .social a {
-      font-size: 1.45rem;
+      font-size: 1.4rem;
       color: inherit;
       transition: 0.3s;
     }
@@ -239,17 +226,17 @@
 
     .buttons {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       justify-content: center;
       flex-wrap: wrap;
       margin-top: 8px;
     }
     .btn {
-      padding: 11px 24px;
+      padding: 10px 22px;
       border-radius: 12px;
       text-decoration: none;
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 0.93rem;
       transition: 0.3s;
       border: none;
       cursor: pointer;
@@ -257,22 +244,65 @@
     }
     .btn:hover { transform: translateY(-3px); }
 
+    /* Engagement Bar */
+    .engage-bar {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      margin: 18px 0 10px;
+      flex-wrap: wrap;
+      font-size: 0.9rem;
+    }
+    .engage-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.08);
+      transition: 0.3s;
+    }
+    .engage-item:hover { background: rgba(255,255,255,0.15); transform: scale(1.05); }
+    .engage-item.liked { color: #f472b6; }
+
+    .share-btns {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .share-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      color: white;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .share-btn:hover { transform: scale(1.15); }
+    .share-wa { background: #25d366; }
+    .share-tg { background: #0088cc; }
+    .share-copy { background: #6b7280; }
+
     .nav {
       position: fixed;
-      bottom: 22px;
+      bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
-      gap: 10px;
+      gap: 9px;
       z-index: 100;
-      background: rgba(0,0,0,0.4);
-      padding: 9px 16px;
+      background: rgba(0,0,0,0.45);
+      padding: 8px 14px;
       border-radius: 50px;
       backdrop-filter: blur(10px);
     }
     .nav-btn {
-      width: 36px;
-      height: 36px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       border: 2px solid rgba(255,255,255,0.4);
       background: transparent;
@@ -280,6 +310,7 @@
       font-weight: 700;
       cursor: pointer;
       transition: 0.3s;
+      font-size: 0.9rem;
     }
     .nav-btn.active, .nav-btn:hover {
       background: white;
@@ -287,69 +318,54 @@
       border-color: white;
     }
 
-    /* ===== PAGE THEMES (Mixed Colors) ===== */
-    #page1 {
-      background: linear-gradient(-45deg, #0f0c29, #302b63, #4c1d95, #1e1b4b);
-      background-size: 400% 400%;
-      animation: gradient 14s ease infinite;
-    }
+    /* Page Themes */
+    #page1 { background: linear-gradient(-45deg, #0f0c29, #302b63, #4c1d95, #1e1b4b); background-size: 400% 400%; animation: gradient 14s ease infinite; }
     #page1 .card { border: 1px solid rgba(168,85,247,0.35); box-shadow: 0 0 40px rgba(168,85,247,0.25); }
     #page1 .avatar { border: 3px solid #a855f7; box-shadow: 0 0 25px #a855f7; }
     #page1 .name { background: linear-gradient(90deg, #c084fc, #e879f9, #f0abfc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     #page1 .btn { background: linear-gradient(135deg, #a855f7, #7c3aed); }
     #page1 .btn.outline { background: transparent; border: 2px solid #a855f7; color: inherit; }
-    #page1 .shayari { color: #e9d5ff; }
 
-    #page2 {
-      background: linear-gradient(-45deg, #0c4a6e, #0369a1, #0e7490, #155e75);
-      background-size: 400% 400%;
-      animation: gradient 14s ease infinite;
-    }
+    #page2 { background: linear-gradient(-45deg, #0c4a6e, #0369a1, #0e7490, #155e75); background-size: 400% 400%; animation: gradient 14s ease infinite; }
     #page2 .card { border: 1px solid rgba(34,211,238,0.35); box-shadow: 0 0 40px rgba(34,211,238,0.25); }
     #page2 .avatar { border: 3px solid #22d3ee; box-shadow: 0 0 25px #22d3ee; }
     #page2 .name { color: #67e8f9; text-shadow: 0 0 18px #22d3ee; }
     #page2 .btn { background: linear-gradient(135deg, #06b6d4, #0891b2); }
     #page2 .btn.outline { background: transparent; border: 2px solid #22d3ee; color: inherit; }
-    #page2 .shayari { color: #a5f3fc; }
 
-    #page3 {
-      background: linear-gradient(-45deg, #064e3b, #065f46, #047857, #115e59);
-      background-size: 400% 400%;
-      animation: gradient 14s ease infinite;
-    }
+    #page3 { background: linear-gradient(-45deg, #064e3b, #065f46, #047857, #115e59); background-size: 400% 400%; animation: gradient 14s ease infinite; }
     #page3 .card { border: 1px solid rgba(52,211,153,0.35); box-shadow: 0 0 40px rgba(52,211,153,0.25); }
     #page3 .avatar { border: 3px solid #34d399; box-shadow: 0 0 25px #34d399; }
     #page3 .name { background: linear-gradient(90deg, #6ee7b7, #34d399, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     #page3 .btn { background: linear-gradient(135deg, #10b981, #059669); }
     #page3 .btn.outline { background: transparent; border: 2px solid #34d399; color: inherit; }
-    #page3 .shayari { color: #a7f3d0; }
 
-    #page4 {
-      background: linear-gradient(-45deg, #7c2d12, #9a3412, #c2410c, #9a3412);
-      background-size: 400% 400%;
-      animation: gradient 14s ease infinite;
-    }
+    #page4 { background: linear-gradient(-45deg, #7c2d12, #9a3412, #c2410c, #9a3412); background-size: 400% 400%; animation: gradient 14s ease infinite; }
     #page4 .card { border: 1px solid rgba(251,146,60,0.35); box-shadow: 0 0 40px rgba(251,146,60,0.25); }
     #page4 .avatar { border: 3px solid #fb923c; box-shadow: 0 0 25px #fb923c; }
     #page4 .name { color: #fdba74; }
     #page4 .btn { background: linear-gradient(135deg, #f97316, #ea580c); }
     #page4 .btn.outline { background: transparent; border: 2px solid #fb923c; color: inherit; }
-    #page4 .shayari { color: #fed7aa; }
 
-    #page5 {
-      background: linear-gradient(-45deg, #831843, #9d174d, #be123c, #9f1239);
-      background-size: 400% 400%;
-      animation: gradient 14s ease infinite;
-    }
+    #page5 { background: linear-gradient(-45deg, #831843, #9d174d, #be123c, #9f1239); background-size: 400% 400%; animation: gradient 14s ease infinite; }
     #page5 .card { border: 1px solid rgba(244,114,182,0.35); box-shadow: 0 0 40px rgba(244,114,182,0.25); }
     #page5 .avatar { border: 3px solid #f472b6; box-shadow: 0 0 25px #f472b6; }
     #page5 .name { background: linear-gradient(90deg, #f9a8d4, #f472b6, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     #page5 .btn { background: linear-gradient(135deg, #ec4899, #db2777); }
     #page5 .btn.outline { background: transparent; border: 2px solid #f472b6; color: inherit; }
-    #page5 .shayari { color: #fbcfe8; }
 
     .contact-info { margin: 12px 0; font-size: 0.92rem; line-height: 1.7; }
     .contact-info a { color: #f9a8d4; text-decoration: none; font-weight: 500; }
+
+    /* Comments Section */
+    .comments-box {
+      width: 90%;
+      max-width: 420px;
+      margin: 20px auto 80px;
+      padding: 15px;
+      border-radius: 16px;
+      background: rgba(0,0,0,0.25);
+    }
 
     @keyframes gradient {
       0% { background-position: 0% 50%; }
@@ -357,21 +373,17 @@
       100% { background-position: 0% 50%; }
     }
 
-    #particles-js {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-    }
+    #particles-js { position: fixed; inset: 0; z-index: 0; }
 
     body.day .theme-toggle { color: #1e1b4b; border-color: rgba(0,0,0,0.2); background: rgba(255,255,255,0.7); }
-    body.day .nav { background: rgba(255,255,255,0.7); }
+    body.day .nav { background: rgba(255,255,255,0.75); }
     body.day .nav-btn { color: #1e1b4b; border-color: rgba(0,0,0,0.25); }
     body.day .nav-btn.active { background: #1e1b4b; color: white; }
   </style>
 </head>
 <body>
 
-  <!-- WELCOME SCREEN -->
+  <!-- WELCOME -->
   <div id="welcome-screen">
     <div class="big-heart">❤️</div>
     <h1 class="welcome-text">Welcome to Govind's World</h1>
@@ -380,12 +392,11 @@
     <button class="open-door-btn" onclick="openDoor()">Click here to Open the Door</button>
   </div>
 
-  <!-- MAIN CONTENT -->
+  <!-- MAIN -->
   <div id="main-content">
     <div id="particles-js"></div>
 
-    <!-- Theme Toggle -->
-    <button class="theme-toggle" id="themeToggle" title="Day / Night Mode">
+    <button class="theme-toggle" id="themeToggle">
       <i class="fas fa-moon"></i>
     </button>
 
@@ -397,6 +408,21 @@
         <h1 class="name">GOVIND</h1>
         <p class="tag">@GOVIND-BOTS</p>
         <p class="about">💻 Telegram Bot Developer | Python | Pyrogram<br>⚡ Building automation with creativity</p>
+
+        <!-- Engagement -->
+        <div class="engage-bar">
+          <div class="engage-item" id="viewCount"><i class="fas fa-eye"></i> <span>0</span> Views</div>
+          <div class="engage-item" id="likeBtn" onclick="toggleLike()">
+            <i class="fas fa-heart"></i> <span id="likeCount">0</span> Likes
+          </div>
+        </div>
+
+        <div class="share-btns">
+          <button class="share-btn share-wa" onclick="shareWhatsApp()"><i class="fab fa-whatsapp"></i></button>
+          <button class="share-btn share-tg" onclick="shareTelegram()"><i class="fab fa-telegram"></i></button>
+          <button class="share-btn share-copy" onclick="copyLink()"><i class="fas fa-link"></i></button>
+        </div>
+
         <div class="social">
           <a href="https://github.com/GOVIND-BOTS" target="_blank"><i class="fab fa-github"></i></a>
           <a href="https://telegram.dog/govind_official_mp13" target="_blank"><i class="fab fa-telegram"></i></a>
@@ -507,9 +533,31 @@
           <button class="btn" onclick="goToPage(1)">Home</button>
         </div>
       </div>
+
+      <!-- Comments -->
+      <div class="comments-box">
+        <h3 style="margin-bottom:12px; font-size:1.1rem;">💬 Comments</h3>
+        <script src="https://giscus.app/client.js"
+          data-repo="GOVIND-BOTS/GOVIND-BOTS"
+          data-repo-id="R_kgDOXXXXXXX"
+          data-category="General"
+          data-category-id="DIC_kwDOXXXXXXX"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="bottom"
+          data-theme="dark"
+          data-lang="en"
+          crossorigin="anonymous"
+          async>
+        </script>
+        <p style="font-size:0.8rem; opacity:0.7; margin-top:10px;">
+          (Comments ke liye GitHub pe Discussions enable karna hoga)
+        </p>
+      </div>
     </div>
 
-    <!-- Bottom Nav -->
     <div class="nav">
       <button class="nav-btn active" onclick="goToPage(1)">1</button>
       <button class="nav-btn" onclick="goToPage(2)">2</button>
@@ -524,25 +572,69 @@
       document.getElementById('welcome-screen').classList.add('hide');
       setTimeout(() => {
         document.getElementById('main-content').classList.add('show');
+        updateViews();
       }, 500);
+    }
+
+    // Views (local for demo)
+    function updateViews() {
+      let views = localStorage.getItem('portfolioViews') || 0;
+      views = parseInt(views) + 1;
+      localStorage.setItem('portfolioViews', views);
+      document.querySelector('#viewCount span').innerText = views;
+    }
+
+    // Likes
+    function toggleLike() {
+      let likes = localStorage.getItem('portfolioLikes') || 0;
+      let liked = localStorage.getItem('portfolioLiked') === 'true';
+      const btn = document.getElementById('likeBtn');
+      
+      if (liked) {
+        likes = Math.max(0, parseInt(likes) - 1);
+        localStorage.setItem('portfolioLiked', 'false');
+        btn.classList.remove('liked');
+      } else {
+        likes = parseInt(likes) + 1;
+        localStorage.setItem('portfolioLiked', 'true');
+        btn.classList.add('liked');
+      }
+      localStorage.setItem('portfolioLikes', likes);
+      document.getElementById('likeCount').innerText = likes;
+    }
+
+    // Load likes on start
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('likeCount').innerText = localStorage.getItem('portfolioLikes') || 0;
+      if (localStorage.getItem('portfolioLiked') === 'true') {
+        document.getElementById('likeBtn').classList.add('liked');
+      }
+    });
+
+    // Share
+    function shareWhatsApp() {
+      window.open(`https://wa.me/?text=${encodeURIComponent(document.title + ' ' + location.href)}`);
+    }
+    function shareTelegram() {
+      window.open(`https://t.me/share/url?url=${encodeURIComponent(location.href)}&text=${encodeURIComponent(document.title)}`);
+    }
+    function copyLink() {
+      navigator.clipboard.writeText(location.href);
+      alert('Link copied!');
     }
 
     // Particles
     particlesJS("particles-js", {
       particles: {
-        number: { value: 55 },
+        number: { value: 50 },
         color: { value: "#ffffff" },
         shape: { type: "circle" },
-        opacity: { value: 0.28 },
-        size: { value: 2.4 },
-        move: { enable: true, speed: 1.4 }
-      },
-      interactivity: {
-        events: { onhover: { enable: true, mode: "repulse" } }
+        opacity: { value: 0.25 },
+        size: { value: 2.3 },
+        move: { enable: true, speed: 1.3 }
       }
     });
 
-    // Page Switch
     function goToPage(num) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.getElementById('page' + num).classList.add('active');
@@ -550,15 +642,13 @@
       document.querySelectorAll('.nav-btn')[num - 1].classList.add('active');
     }
 
-    // Day / Night Mode
+    // Theme
     const toggleBtn = document.getElementById('themeToggle');
     const icon = toggleBtn.querySelector('i');
-
     if (localStorage.getItem('theme') === 'day') {
       document.body.classList.add('day');
       icon.classList.replace('fa-moon', 'fa-sun');
     }
-
     toggleBtn.addEventListener('click', () => {
       document.body.classList.toggle('day');
       if (document.body.classList.contains('day')) {
