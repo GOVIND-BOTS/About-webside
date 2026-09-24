@@ -11,25 +11,36 @@
 
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --text: #ffffff;
+      --card-bg: rgba(15, 12, 41, 0.6);
+    }
+    
+    body.day {
+      --text: #1e1b4b;
+      --card-bg: rgba(255, 255, 255, 0.85);
+    }
+
     body {
       font-family: 'Poppins', sans-serif;
       overflow: hidden;
       height: 100vh;
-      color: white;
-      background: #0f0c29;
+      color: var(--text);
+      transition: all 0.4s ease;
     }
 
     /* ========== WELCOME SCREEN ========== */
     #welcome-screen {
       position: fixed;
       inset: 0;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      background: linear-gradient(135deg, #0f0c29, #302b63, #1a0533);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       z-index: 9999;
-      transition: opacity 0.8s ease, visibility 0.8s ease;
+      transition: opacity 0.9s ease, visibility 0.9s ease;
     }
 
     #welcome-screen.hide {
@@ -39,53 +50,75 @@
     }
 
     .big-heart {
-      font-size: 90px;
-      animation: heartbeat 1.4s ease-in-out infinite;
-      margin-bottom: 20px;
-      filter: drop-shadow(0 0 25px #ff2d55);
+      font-size: 100px;
+      animation: heartbeat 1.5s ease-in-out infinite;
+      margin-bottom: 15px;
+      filter: drop-shadow(0 0 30px #ff2d55);
     }
 
     @keyframes heartbeat {
       0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.2); }
+      15% { transform: scale(1.25); }
+      30% { transform: scale(1); }
+      45% { transform: scale(1.15); }
     }
 
     .welcome-text {
-      font-size: 2.2rem;
-      font-weight: 700;
+      font-size: 2.4rem;
+      font-weight: 800;
       text-align: center;
-      margin-bottom: 12px;
-      background: linear-gradient(90deg, #ff6b9d, #c084fc, #60a5fa);
+      margin-bottom: 10px;
+      background: linear-gradient(90deg, #ff6b9d, #c084fc, #60a5fa, #ff6b9d);
+      background-size: 300%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      animation: fadeInUp 1s ease;
+      animation: gradientText 4s linear infinite, fadeInUp 1s ease;
+    }
+
+    @keyframes gradientText {
+      0% { background-position: 0%; }
+      100% { background-position: 300%; }
     }
 
     .welcome-sub {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       color: #d1d5db;
-      margin-bottom: 40px;
-      text-align: center;
+      margin-bottom: 15px;
+      letter-spacing: 2px;
       animation: fadeInUp 1.2s ease;
     }
 
+    .welcome-line {
+      font-size: 0.95rem;
+      color: #a78bfa;
+      margin-bottom: 40px;
+      font-style: italic;
+      animation: fadeInUp 1.3s ease;
+    }
+
     .open-door-btn {
-      padding: 16px 40px;
+      padding: 16px 42px;
       font-size: 1.15rem;
       font-weight: 600;
       border: none;
       border-radius: 50px;
-      background: linear-gradient(135deg, #ec4899, #8b5cf6);
+      background: linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6);
+      background-size: 200%;
       color: white;
       cursor: pointer;
-      box-shadow: 0 10px 30px rgba(236, 72, 153, 0.4);
+      box-shadow: 0 10px 35px rgba(236, 72, 153, 0.45);
       transition: all 0.3s ease;
-      animation: fadeInUp 1.4s ease;
+      animation: fadeInUp 1.5s ease, btnGlow 3s ease infinite;
+    }
+
+    @keyframes btnGlow {
+      0%, 100% { box-shadow: 0 10px 35px rgba(236, 72, 153, 0.45); }
+      50% { box-shadow: 0 10px 45px rgba(139, 92, 246, 0.6); }
     }
 
     .open-door-btn:hover {
-      transform: translateY(-4px) scale(1.05);
-      box-shadow: 0 15px 40px rgba(236, 72, 153, 0.6);
+      transform: translateY(-5px) scale(1.05);
+      background-position: 100%;
     }
 
     @keyframes fadeInUp {
@@ -93,17 +126,60 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* ========== MAIN CONTENT (hidden initially) ========== */
+    /* ========== MAIN CONTENT ========== */
     #main-content {
       opacity: 0;
-      transition: opacity 0.8s ease;
+      transition: opacity 0.9s ease;
+      height: 100vh;
+    }
+    #main-content.show { opacity: 1; }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 200;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.3);
+      background: rgba(0,0,0,0.35);
+      color: white;
+      font-size: 1.25rem;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s;
+    }
+    .theme-toggle:hover { transform: scale(1.1); }
+
+    /* Shayari on top */
+    .shayari {
+      position: absolute;
+      top: 45px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 420px;
+      text-align: center;
+      font-size: 0.95rem;
+      font-weight: 500;
+      line-height: 1.5;
+      opacity: 0.9;
+      z-index: 5;
+      animation: shayariFloat 4s ease-in-out infinite;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
     }
 
-    #main-content.show {
-      opacity: 1;
+    @keyframes shayariFloat {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(-6px); }
     }
 
-    /* ========== COMMON PAGE STYLES ========== */
+    /* Pages */
     .page {
       position: absolute;
       inset: 0;
@@ -119,42 +195,44 @@
     .card {
       width: 90%;
       max-width: 420px;
-      padding: 30px 25px;
+      padding: 28px 24px;
       border-radius: 24px;
       backdrop-filter: blur(16px);
       text-align: center;
       position: relative;
       z-index: 2;
+      background: var(--card-bg);
+      transition: 0.4s;
     }
 
     .avatar {
-      width: 130px;
-      height: 130px;
+      width: 125px;
+      height: 125px;
       border-radius: 50%;
       object-fit: cover;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
     }
 
     .name {
-      font-size: 2.3rem;
+      font-size: 2.2rem;
       font-weight: 900;
       letter-spacing: 2px;
-      margin: 10px 0 5px;
+      margin: 8px 0 4px;
     }
 
-    .tag { font-size: 1rem; opacity: 0.85; margin-bottom: 12px; }
-    .about { font-size: 0.95rem; line-height: 1.5; margin-bottom: 18px; opacity: 0.9; }
+    .tag { font-size: 0.95rem; opacity: 0.85; margin-bottom: 10px; }
+    .about { font-size: 0.92rem; line-height: 1.5; margin-bottom: 16px; opacity: 0.9; }
 
     .social {
       display: flex;
       justify-content: center;
-      gap: 16px;
-      margin: 18px 0;
+      gap: 15px;
+      margin: 16px 0;
       flex-wrap: wrap;
     }
     .social a {
-      font-size: 1.5rem;
-      color: white;
+      font-size: 1.45rem;
+      color: inherit;
       transition: 0.3s;
     }
     .social a:hover { transform: scale(1.25) translateY(-4px); }
@@ -164,7 +242,7 @@
       gap: 12px;
       justify-content: center;
       flex-wrap: wrap;
-      margin-top: 10px;
+      margin-top: 8px;
     }
     .btn {
       padding: 11px 24px;
@@ -181,20 +259,20 @@
 
     .nav {
       position: fixed;
-      bottom: 25px;
+      bottom: 22px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
       gap: 10px;
       z-index: 100;
       background: rgba(0,0,0,0.4);
-      padding: 10px 18px;
+      padding: 9px 16px;
       border-radius: 50px;
       backdrop-filter: blur(10px);
     }
     .nav-btn {
-      width: 38px;
-      height: 38px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       border: 2px solid rgba(255,255,255,0.4);
       background: transparent;
@@ -209,43 +287,68 @@
       border-color: white;
     }
 
-    /* Page Themes */
-    #page1 { background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e); background-size: 400% 400%; animation: gradient 12s ease infinite; }
-    #page1 .card { background: rgba(15,12,41,0.6); border: 1px solid rgba(168,85,247,0.3); box-shadow: 0 0 40px rgba(168,85,247,0.3); }
+    /* ===== PAGE THEMES (Mixed Colors) ===== */
+    #page1 {
+      background: linear-gradient(-45deg, #0f0c29, #302b63, #4c1d95, #1e1b4b);
+      background-size: 400% 400%;
+      animation: gradient 14s ease infinite;
+    }
+    #page1 .card { border: 1px solid rgba(168,85,247,0.35); box-shadow: 0 0 40px rgba(168,85,247,0.25); }
     #page1 .avatar { border: 3px solid #a855f7; box-shadow: 0 0 25px #a855f7; }
     #page1 .name { background: linear-gradient(90deg, #c084fc, #e879f9, #f0abfc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     #page1 .btn { background: linear-gradient(135deg, #a855f7, #7c3aed); }
-    #page1 .btn.outline { background: transparent; border: 2px solid #a855f7; }
+    #page1 .btn.outline { background: transparent; border: 2px solid #a855f7; color: inherit; }
+    #page1 .shayari { color: #e9d5ff; }
 
-    #page2 { background: linear-gradient(-45deg, #0c4a6e, #0369a1, #0e7490); background-size: 400% 400%; animation: gradient 12s ease infinite; }
-    #page2 .card { background: rgba(8,47,73,0.65); border: 1px solid rgba(34,211,238,0.3); box-shadow: 0 0 40px rgba(34,211,238,0.25); }
+    #page2 {
+      background: linear-gradient(-45deg, #0c4a6e, #0369a1, #0e7490, #155e75);
+      background-size: 400% 400%;
+      animation: gradient 14s ease infinite;
+    }
+    #page2 .card { border: 1px solid rgba(34,211,238,0.35); box-shadow: 0 0 40px rgba(34,211,238,0.25); }
     #page2 .avatar { border: 3px solid #22d3ee; box-shadow: 0 0 25px #22d3ee; }
-    #page2 .name { color: #67e8f9; text-shadow: 0 0 20px #22d3ee; }
+    #page2 .name { color: #67e8f9; text-shadow: 0 0 18px #22d3ee; }
     #page2 .btn { background: linear-gradient(135deg, #06b6d4, #0891b2); }
-    #page2 .btn.outline { background: transparent; border: 2px solid #22d3ee; }
+    #page2 .btn.outline { background: transparent; border: 2px solid #22d3ee; color: inherit; }
+    #page2 .shayari { color: #a5f3fc; }
 
-    #page3 { background: linear-gradient(-45deg, #064e3b, #065f46, #047857); background-size: 400% 400%; animation: gradient 12s ease infinite; }
-    #page3 .card { background: rgba(6,78,59,0.65); border: 1px solid rgba(52,211,153,0.3); box-shadow: 0 0 40px rgba(52,211,153,0.25); }
+    #page3 {
+      background: linear-gradient(-45deg, #064e3b, #065f46, #047857, #115e59);
+      background-size: 400% 400%;
+      animation: gradient 14s ease infinite;
+    }
+    #page3 .card { border: 1px solid rgba(52,211,153,0.35); box-shadow: 0 0 40px rgba(52,211,153,0.25); }
     #page3 .avatar { border: 3px solid #34d399; box-shadow: 0 0 25px #34d399; }
     #page3 .name { background: linear-gradient(90deg, #6ee7b7, #34d399, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     #page3 .btn { background: linear-gradient(135deg, #10b981, #059669); }
-    #page3 .btn.outline { background: transparent; border: 2px solid #34d399; }
+    #page3 .btn.outline { background: transparent; border: 2px solid #34d399; color: inherit; }
+    #page3 .shayari { color: #a7f3d0; }
 
-    #page4 { background: linear-gradient(-45deg, #7c2d12, #9a3412, #c2410c); background-size: 400% 400%; animation: gradient 12s ease infinite; }
-    #page4 .card { background: rgba(124,45,18,0.65); border: 1px solid rgba(251,146,60,0.3); box-shadow: 0 0 40px rgba(251,146,60,0.25); }
+    #page4 {
+      background: linear-gradient(-45deg, #7c2d12, #9a3412, #c2410c, #9a3412);
+      background-size: 400% 400%;
+      animation: gradient 14s ease infinite;
+    }
+    #page4 .card { border: 1px solid rgba(251,146,60,0.35); box-shadow: 0 0 40px rgba(251,146,60,0.25); }
     #page4 .avatar { border: 3px solid #fb923c; box-shadow: 0 0 25px #fb923c; }
     #page4 .name { color: #fdba74; }
     #page4 .btn { background: linear-gradient(135deg, #f97316, #ea580c); }
-    #page4 .btn.outline { background: transparent; border: 2px solid #fb923c; }
+    #page4 .btn.outline { background: transparent; border: 2px solid #fb923c; color: inherit; }
+    #page4 .shayari { color: #fed7aa; }
 
-    #page5 { background: linear-gradient(-45deg, #831843, #9d174d, #be123c); background-size: 400% 400%; animation: gradient 12s ease infinite; }
-    #page5 .card { background: rgba(131,24,67,0.65); border: 1px solid rgba(244,114,182,0.3); box-shadow: 0 0 40px rgba(244,114,182,0.25); }
+    #page5 {
+      background: linear-gradient(-45deg, #831843, #9d174d, #be123c, #9f1239);
+      background-size: 400% 400%;
+      animation: gradient 14s ease infinite;
+    }
+    #page5 .card { border: 1px solid rgba(244,114,182,0.35); box-shadow: 0 0 40px rgba(244,114,182,0.25); }
     #page5 .avatar { border: 3px solid #f472b6; box-shadow: 0 0 25px #f472b6; }
     #page5 .name { background: linear-gradient(90deg, #f9a8d4, #f472b6, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     #page5 .btn { background: linear-gradient(135deg, #ec4899, #db2777); }
-    #page5 .btn.outline { background: transparent; border: 2px solid #f472b6; }
+    #page5 .btn.outline { background: transparent; border: 2px solid #f472b6; color: inherit; }
+    #page5 .shayari { color: #fbcfe8; }
 
-    .contact-info { margin: 15px 0; font-size: 0.95rem; line-height: 1.8; }
+    .contact-info { margin: 12px 0; font-size: 0.92rem; line-height: 1.7; }
     .contact-info a { color: #f9a8d4; text-decoration: none; font-weight: 500; }
 
     @keyframes gradient {
@@ -259,24 +362,36 @@
       inset: 0;
       z-index: 0;
     }
+
+    body.day .theme-toggle { color: #1e1b4b; border-color: rgba(0,0,0,0.2); background: rgba(255,255,255,0.7); }
+    body.day .nav { background: rgba(255,255,255,0.7); }
+    body.day .nav-btn { color: #1e1b4b; border-color: rgba(0,0,0,0.25); }
+    body.day .nav-btn.active { background: #1e1b4b; color: white; }
   </style>
 </head>
 <body>
 
-  <!-- ========== WELCOME SCREEN ========== -->
+  <!-- WELCOME SCREEN -->
   <div id="welcome-screen">
     <div class="big-heart">❤️</div>
     <h1 class="welcome-text">Welcome to Govind's World</h1>
     <p class="welcome-sub">Developer • Creator • Dreamer</p>
+    <p class="welcome-line">"Code se duniya badalte hain"</p>
     <button class="open-door-btn" onclick="openDoor()">Click here to Open the Door</button>
   </div>
 
-  <!-- ========== MAIN CONTENT ========== -->
+  <!-- MAIN CONTENT -->
   <div id="main-content">
     <div id="particles-js"></div>
 
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" title="Day / Night Mode">
+      <i class="fas fa-moon"></i>
+    </button>
+
     <!-- PAGE 1 -->
     <div class="page active" id="page1">
+      <div class="shayari">"Silence is my power,<br>Code is my language 🔥"</div>
       <div class="card">
         <img src="https://graph.org/file/0471decf208b82b1a9e58.jpg" class="avatar" alt="Govind">
         <h1 class="name">GOVIND</h1>
@@ -299,6 +414,7 @@
 
     <!-- PAGE 2 -->
     <div class="page" id="page2">
+      <div class="shayari">"Main nahi manta limits,<br>Main banata hoon systems 💻"</div>
       <div class="card">
         <img src="https://graph.org/file/0471decf208b82b1a9e58.jpg" class="avatar" alt="Govind">
         <h1 class="name">GOVIND</h1>
@@ -321,6 +437,7 @@
 
     <!-- PAGE 3 -->
     <div class="page" id="page3">
+      <div class="shayari">"Skills se nahi,<br>Hunger se farq padta hai 🔥"</div>
       <div class="card">
         <img src="https://graph.org/file/0471decf208b82b1a9e58.jpg" class="avatar" alt="Govind">
         <h1 class="name">GOVIND</h1>
@@ -343,6 +460,7 @@
 
     <!-- PAGE 4 -->
     <div class="page" id="page4">
+      <div class="shayari">"Projects bolte hain,<br>baatein nahi ⚡"</div>
       <div class="card">
         <img src="https://graph.org/file/0471decf208b82b1a9e58.jpg" class="avatar" alt="Govind">
         <h1 class="name">GOVIND</h1>
@@ -365,6 +483,7 @@
 
     <!-- PAGE 5 -->
     <div class="page" id="page5">
+      <div class="shayari">"Connect karo,<br>warna miss ho jaoge 🚀"</div>
       <div class="card">
         <img src="https://graph.org/file/0471decf208b82b1a9e58.jpg" class="avatar" alt="Govind">
         <h1 class="name">GOVIND</h1>
@@ -390,7 +509,7 @@
       </div>
     </div>
 
-    <!-- Bottom Navigation -->
+    <!-- Bottom Nav -->
     <div class="nav">
       <button class="nav-btn active" onclick="goToPage(1)">1</button>
       <button class="nav-btn" onclick="goToPage(2)">2</button>
@@ -401,36 +520,55 @@
   </div>
 
   <script>
-    // Welcome Screen
     function openDoor() {
       document.getElementById('welcome-screen').classList.add('hide');
       setTimeout(() => {
         document.getElementById('main-content').classList.add('show');
-      }, 400);
+      }, 500);
     }
 
     // Particles
     particlesJS("particles-js", {
       particles: {
-        number: { value: 60 },
+        number: { value: 55 },
         color: { value: "#ffffff" },
         shape: { type: "circle" },
-        opacity: { value: 0.3 },
-        size: { value: 2.5 },
-        move: { enable: true, speed: 1.5 }
+        opacity: { value: 0.28 },
+        size: { value: 2.4 },
+        move: { enable: true, speed: 1.4 }
       },
       interactivity: {
         events: { onhover: { enable: true, mode: "repulse" } }
       }
     });
 
-    // Page Switcher
+    // Page Switch
     function goToPage(num) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.getElementById('page' + num).classList.add('active');
       document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
       document.querySelectorAll('.nav-btn')[num - 1].classList.add('active');
     }
+
+    // Day / Night Mode
+    const toggleBtn = document.getElementById('themeToggle');
+    const icon = toggleBtn.querySelector('i');
+
+    if (localStorage.getItem('theme') === 'day') {
+      document.body.classList.add('day');
+      icon.classList.replace('fa-moon', 'fa-sun');
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      document.body.classList.toggle('day');
+      if (document.body.classList.contains('day')) {
+        icon.classList.replace('fa-moon', 'fa-sun');
+        localStorage.setItem('theme', 'day');
+      } else {
+        icon.classList.replace('fa-sun', 'fa-moon');
+        localStorage.setItem('theme', 'night');
+      }
+    });
   </script>
 </body>
 </html>
