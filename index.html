@@ -1,280 +1,282 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Govind — Telegram Bot Developer | Creator | Python & Pyrogram Expert" />
+  <meta name="author" content="Govind" />
+  <title>GOVIND | Developer Portfolio</title>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Favicon -->
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/179/179309.png" type="image/x-icon" />
 
-<title>Govind | Official Portfolio</title>
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;900&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
-<meta name="description" content="Govind Official Portfolio | Telegram Bot Developer">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-<link rel="icon" href="https://vectorified.com/images/attack-on-titan-icon-31.png">
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #0f0c29);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      color: #fff;
+      text-align: center;
+      overflow: hidden;
+      height: 100vh;
+      position: relative;
+    }
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
-<script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    #particles-js {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
 
-<link rel="stylesheet" href="src/style.css">
+    .card {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 90%;
+      max-width: 420px;
+      margin: auto;
+      padding: 30px 25px;
+      border-radius: 24px;
+      background: rgba(15, 12, 41, 0.55);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 50px rgba(138, 43, 226, 0.25);
+      z-index: 1;
+    }
 
-<style>
+    .avatar {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      border: 3px solid #a855f7;
+      box-shadow: 0 0 30px #a855f7, 0 0 60px rgba(168, 85, 247, 0.4);
+      animation: glow 3s infinite alternate;
+      object-fit: cover;
+    }
 
-/* BODY */
+    @keyframes glow {
+      from { box-shadow: 0 0 15px #a855f7, 0 0 30px rgba(168, 85, 247, 0.3); }
+      to   { box-shadow: 0 0 40px #c084fc, 0 0 70px rgba(192, 132, 252, 0.5); }
+    }
 
-body{
-background:#0f0f0f;
-font-family:'Poppins',sans-serif;
-color:white;
-}
+    /* ====== SUPER COOL NAME ANIMATION ====== */
+    .name {
+      margin-top: 18px;
+      font-size: 2.4rem;
+      font-weight: 900;
+      letter-spacing: 3px;
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
 
-/* NAME */
+    .name span {
+      display: inline-block;
+      background: linear-gradient(90deg, #c084fc, #e879f9, #f0abfc, #c084fc);
+      background-size: 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: textGlow 4s linear infinite, bounce 2.5s ease-in-out infinite;
+    }
 
-.name{
-color:#ff004f;
-text-shadow:0 0 15px #ff004f;
-}
+    .name span:nth-child(1) { animation-delay: 0.0s; }
+    .name span:nth-child(2) { animation-delay: 0.1s; }
+    .name span:nth-child(3) { animation-delay: 0.2s; }
+    .name span:nth-child(4) { animation-delay: 0.3s; }
+    .name span:nth-child(5) { animation-delay: 0.4s; }
+    .name span:nth-child(6) { animation-delay: 0.5s; }
 
-/* SUBNAME */
+    @keyframes textGlow {
+      0%   { background-position: 0%; }
+      100% { background-position: 300%; }
+    }
 
-.sub-name{
-color:#bbb;
-}
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50%      { transform: translateY(-8px) scale(1.08); }
+    }
 
-/* ATTITUDE BIO */
+    .tag {
+      color: #c4b5fd;
+      font-size: 1.05rem;
+      margin-top: 6px;
+      letter-spacing: 1px;
+    }
 
-.attitude{
-text-align:center;
-font-size:15px;
-margin-top:10px;
-color:#a855f7;
-line-height:1.6;
-}
+    .about {
+      margin: 14px 0 20px;
+      font-size: 0.98rem;
+      color: #d1d5db;
+      line-height: 1.5;
+    }
 
-/* BUTTONS */
+    .social {
+      margin: 18px 0;
+    }
 
-.follow{
-background:#ff004f;
-color:white;
-padding:10px 20px;
-border-radius:25px;
-}
+    .social a {
+      color: #e9d5ff;
+      margin: 0 12px;
+      font-size: 1.55rem;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
 
-.share{
-background:#a855f7;
-color:white;
-padding:10px 20px;
-border-radius:25px;
-}
+    .social a:hover {
+      color: #c084fc;
+      transform: translateY(-5px) scale(1.2);
+      text-shadow: 0 0 15px #c084fc;
+    }
 
-.follow:hover{
-background:#ff2e6f;
-}
+    .buttons {
+      margin-top: 10px;
+    }
 
-.share:hover{
-background:#b76cff;
-}
+    .btn {
+      display: inline-block;
+      padding: 11px 26px;
+      border-radius: 12px;
+      text-decoration: none;
+      color: #fff;
+      background: linear-gradient(135deg, #a855f7, #7c3aed);
+      margin: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      border: none;
+    }
 
-</style>
+    .btn.outline {
+      background: transparent;
+      border: 2px solid #a855f7;
+      color: #e9d5ff;
+    }
 
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(168, 85, 247, 0.5);
+    }
+
+    .btn.outline:hover {
+      background: rgba(168, 85, 247, 0.15);
+    }
+
+    footer {
+      position: absolute;
+      bottom: 14px;
+      width: 100%;
+      text-align: center;
+      color: #9ca3af;
+      font-size: 0.85rem;
+      z-index: 1;
+    }
+
+    footer strong {
+      color: #c084fc;
+    }
+
+    /* Mobile tweaks */
+    @media (max-width: 480px) {
+      .name { font-size: 2rem; letter-spacing: 2px; }
+      .card { padding: 25px 18px; }
+    }
+  </style>
 </head>
 
-<body id="body" class="dark">
-
-<div id="particles-js"></div>
-
-<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-
-<div class="wrapper">
-
-<div class="toggle">
-<input class="toggle-input" type="checkbox" />
-<div class="toggle-bg"></div>
-<div class="toggle-switch">
-<div class="toggle-switch-figure"></div>
-<div class="toggle-switch-figureAlt"></div>
-</div>
-</div>
-
-</div>
-
-<div id="container" class="container">
-
-<input type="checkbox" id="check">
-
-<div class="card">
-
-<div class="sidebar">
-
-<a href="https://github.com/GOVIND-BOTS" target="_blank">Github</a>
-
-<a href="https://telegram.dog/govind_official_mp13">Telegram</a>
-
-<a href="https://instagram.com/govind__official_mp">Instagram</a>
-
-</div>
-
-<div class="header">
-
-<label for="check" class="checkbtn">
-<div class="hamburger-menu">
-<div class="center"></div>
-</div>
-</label>
-
-<a href="mailto:govindofficialmp@gmail.com" class="mail">
-<i class="far fa-envelope"></i>
-</a>
-
-<div class="main">
-
-<div class="image"></div>
-
-<h3 class="name">⎯꯭‌🖇〭〬❤ 𝐆𝐎𝐕𝐈𝐍𝐃 💀</h3>
-
-<h3 class="sub-name">@govind</h3>
-
-<p class="attitude">
-
-🔥 Attitude Is My Identity <br>
-
-💀 I Don't Follow People <br>
-
-👑 I Create My Own Path <br>
-
-⚡ Telegram Bot Developer <br>
-
-🚀 Python • Telethon • Pyrogram
-
-</p>
-
-</div>
-
-</div>
-
-<div class="content">
-
-<div class="left">
-
-<div class="about-container">
-
-<h3 class="title">About Me</h3>
-
-<p class="text">Telegram Bot Developer</p>
-
-<p class="text">Python • Telethon • Pyrogram</p>
-
-</div>
-
-<div class="icons-container">
-
-<a href="https://github.com/GOVIND-BOTS" class="icon">
-<i class="fab fa-github"></i>
-</a>
-
-<a href="https://telegram.dog/govind_official_mp13" class="icon">
-<i class="fab fa-telegram"></i>
-</a>
-
-<a href="https://instagram.com/govind__official_mp" class="icon">
-<i class="fab fa-instagram"></i>
-</a>
-
-</div>
-
-<div class="buttons-wrap">
-
-<div class="follow-wrap">
-
-<a href="https://instagram.com/govind__official_mp" class="follow">
-
-Follow
-
-</a>
-
-</div>
-
-<div class="share-wrap">
-
-<a href="https://github.com/GOVIND-BOTS" class="share">
-
-More
-
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<script>
-
-/* Disable Inspect */
-
-document.onkeydown = function(e){
-
-if(e.keyCode == 123){
-return false;
-}
-
-if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)){
-return false;
-}
-
-if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)){
-return false;
-}
-
-if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)){
-return false;
-}
-
-}
-
-</script>
-
-<script src="src/app.js"></script>
-
-</body>
-
-</html>                              <div class="share-wrap">
-                                   <a href="https://github.com/GOVIND-BOTS" class="share">More</a>
-                              </div>
-                         </div>
-                    </div>
-               </div>
-          </div>
-     </div>
-
-     <script>
-          document.onkeydown = function (e) {
-               if (event.keyCode == 123) {
-                    return false;
-               }
-               if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {
-                    return false;
-               }
-               if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) {
-                    return false;
-               }
-               if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) {
-                    return false;
-               }
-               if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
-                    return false;
-               }
-          }
-     </script>
-
-     <script src="src/app.js"></script>
-     <script src="/src/contact-form.js" id="contactform" error_text="" success_text=""
-          disable_waittime="true" form_worker_url="https://contactform.cfform.workers.dev/"></script>
+<body>
+  <!-- Particles Background -->
+  <div id="particles-js"></div>
+
+  <!-- Main Card -->
+  <div class="card">
+    <img src="https://graph.org/file/0471decf208b82b1a9e58.jpg" class="avatar" alt="Govind" />
+    
+    <!-- Cool animated name -->
+    <h1 class="name">
+      <span>G</span><span>O</span><span>V</span><span>I</span><span>N</span><span>D</span>
+    </h1>
+
+    <p class="tag">@GOVIND-BOTS</p>
+    
+    <p class="about">
+      💻 Telegram Bot Developer | Python | Pyrogram<br>
+      ⚡ Building automation with creativity
+    </p>
+
+    <div class="social">
+      <a href="https://github.com/GOVIND-BOTS" target="_blank"><i class="fab fa-github"></i></a>
+      <a href="https://telegram.dog/govind_official_mp13" target="_blank"><i class="fab fa-telegram"></i></a>
+      <a href="https://instagram.com/govind__official_mp" target="_blank"><i class="fab fa-instagram"></i></a>
+    </div>
+
+    <div class="buttons">
+      <a href="https://instagram.com/govind__official_mp" class="btn" target="_blank">Follow</a>
+      <a href="https://github.com/GOVIND-BOTS?tab=repositories" class="btn outline" target="_blank">More</a>
+    </div>
+  </div>
+
+  <footer>⚡ Designed & Animated by <strong>GOVIND</strong></footer>
+
+  <!-- Particles Config -->
+  <script>
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 80, density: { enable: true, value_area: 800 } },
+        color: { value: "#c084fc" },
+        shape: { type: "circle" },
+        opacity: { value: 0.45, random: true },
+        size: { value: 3, random: true },
+        line_linked: {
+          enable: true,
+          distance: 140,
+          color: "#a855f7",
+          opacity: 0.25,
+          width: 1
+        },
+        move: {
+          enable: true,
+          speed: 1.8,
+          direction: "none",
+          random: true,
+          straight: false,
+          out_mode: "out",
+          bounce: false
+        }
+      },
+      interactivity: {
+        detect_on: "canvas",
+        events: {
+          onhover: { enable: true, mode: "repulse" },
+          onclick: { enable: true, mode: "push" },
+          resize: true
+        },
+        modes: {
+          repulse: { distance: 100, duration: 0.4 },
+          push: { particles_nb: 4 }
+        }
+      },
+      retina_detect: true
+    });
+  </script>
 </body>
 </html>
