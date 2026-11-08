@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GOVIND | Developer Portfolio</title>
+  <meta name="description" content="Telegram Bot Developer | Python | Pyrogram — GOVIND-BOTS" />
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/179/179309.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg: #050510;
+      --bg2: #0b0a1f;
+      --text: #f5f3ff;
+      --muted: #a5a3c2;
+      --primary: #a855f7;
+      --secondary: #ec4899;
+      --accent: #22d3ee;
+      --green: #34d399;
+      --orange: #fb923c;
+      --card: rgba(18, 14, 45, 0.72);
+      --border: rgba(168, 85, 247, 0.28);
+      --glow: 0 0 40px rgba(168, 85, 247, 0.35);
+      --radius: 22px;
+      --nav-h: 72px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Poppins', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+    body.day {
+      --bg: #f4f0ff;
+      --bg2: #ebe4ff;
+      --text: #1e1b4b;
+      --muted: #5b567a;
+      --card: rgba(255, 255, 255, 0.82);
+      --border: rgba(124, 58, 237, 0.22);
+    }
+
+    /* ===== Background mesh + particles ===== */
+    #bg-canvas {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    }
+    .bg-orb {
+      position: fixed; border-radius: 50%; filter: blur(80px); opacity: 0.45;
+      z-index: 0; pointer-events: none; animation: orbFloat 18s ease-in-out infinite;
+    }
+    .orb-1 { width: 420px; height: 420px; background: #7c3aed; top: -120px; left: -80px; }
+    .orb-2 { width: 360px; height: 360px; background: #db2777; bottom: 10%; right: -100px; animation-delay: -6s; }
+    .orb-3 { width: 280px; height: 280px; background: #0891b2; top: 40%; left: 40%; animation-delay: -12s; opacity: 0.28; }
+    @keyframes orbFloat {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(40px, -30px) scale(1.08); }
+      66% { transform: translate(-30px, 25px) scale(0.94); }
+    }
+
+    /* ===== WELCOME / LOADER ===== */
+    #welcome {
+      position: fixed; inset: 0; z-index: 9999;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: radial-gradient(ellipse at 30% 20%, #1a0b3a 0%, #050510 55%, #0a0618 100%);
+      transition: opacity 0.9s ease, visibility 0.9s ease, transform 0.9s ease;
+    }
+    #welcome.hide {
+      opacity: 0; visibility: hidden; pointer-events: none; transform: scale(1.04);
+    }
+    .welcome-ring {
+      position: absolute; width: 220px; height: 220px; border-radius: 50%;
+      border: 2px solid transparent; border-top-color: var(--secondary);
+      border-right-color: var(--primary); animation: spin 2.4s linear infinite;
+    }
+    .welcome-ring.r2 { width: 280px; height: 280px; border-top-color: var(--accent); animation-duration: 3.2s; animation-direction: reverse; opacity: 0.6; }
+    .welcome-ring.r3 { width: 340px; height: 340px; border-top-color: var(--green); animation-duration: 4s; opacity: 0.35; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .welcome-inner {
+      position: relative; z-index: 2; text-align: center; padding: 24px;
+      animation: fadeUp 1s ease both;
+    }
+    .pulse-heart {
+      font-size: 4.5rem; margin-bottom: 12px;
+      animation: heartBeat 1.4s ease-in-out infinite;
+      filter: drop-shadow(0 0 28px #ff2d55);
+    }
+    @keyframes heartBeat {
+      0%, 100% { transform: scale(1); }
+      14% { transform: scale(1.22); }
+      28% { transform: scale(1); }
+      42% { transform: scale(1.14); }
+    }
+    .welcome-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.8rem, 6vw, 3.2rem);
+      font-weight: 900; letter-spacing: 2px; margin-bottom: 10px;
+      background: linear-gradient(90deg, #ff6b9d, #c084fc, #60a5fa, #34d399, #f472b6, #ff6b9d);
+      background-size: 300%;
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+      animation: gradientShift 5s linear infinite;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 300% 50%; }
+    }
+    .welcome-sub {
+      font-size: 1.05rem; color: #c4b5fd; letter-spacing: 3px; text-transform: uppercase;
+      margin-bottom: 8px; font-weight: 500;
+    }
+    .welcome-quote {
+      color: #e9d5ff; font-style: italic; margin-bottom: 28px; opacity: 0.9;
+      animation: fadeUp 1.2s 0.2s ease both;
+    }
+    .btn-door {
+      position: relative; overflow: hidden;
+      padding: 16px 42px; border: none; border-radius: 999px;
+      font-family: 'Poppins', sans-serif; font-size: 1.05rem; font-weight: 700;
+      color: #fff; cursor: pointer; letter-spacing: 0.5px;
+      background: linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6, #ec4899);
+      background-size: 300% 300%;
+      box-shadow: 0 12px 40px rgba(236, 72, 153, 0.45);
+      animation: gradientShift 4s ease infinite, fadeUp 1.3s 0.3s ease both;
+      transition: transform 0.35s cubic-bezier(.2,.8,.2,1), box-shadow 0.35s;
+    }
+    .btn-door::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+      transform: translateX(-120%); transition: transform 0.6s;
+    }
+    .btn-door:hover { transform: translateY(-5px) scale(1.04); box-shadow: 0 18px 50px rgba(139, 92, 246, 0.55); }
+    .btn-door:hover::before { transform: translateX(120%); }
+    .music-pill {
+      margin-top: 16px; padding: 10px 22px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.28); background: rgba(255,255,255,0.08);
+      color: #fff; cursor: pointer; backdrop-filter: blur(12px);
+      display: inline-flex; align-items: center; gap: 8px; font-weight: 500;
+      transition: 0.3s; animation: fadeUp 1.4s 0.4s ease both;
+    }
+    .music-pill:hover { background: rgba(255,255,255,0.16); transform: translateY(-2px); }
+    .music-pill.playing { border-color: #ec4899; background: rgba(236,72,153,0.2); }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== MAIN APP ===== */
+    #app {
+      position: relative; z-index: 1; opacity: 0; transition: opacity 0.9s ease;
+      min-height: 100vh;
+    }
+    #app.show { opacity: 1; }
+
+    /* Top nav */
+    .topnav {
+      position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 22px; z-index: 200;
+      background: linear-gradient(to bottom, rgba(5,5,16,0.85), transparent);
+      backdrop-filter: blur(8px);
+    }
+    body.day .topnav { background: linear-gradient(to bottom, rgba(244,240,255,0.9), transparent); }
+    .brand {
+      font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 1.05rem;
+      letter-spacing: 2px;
+      background: linear-gradient(90deg, #c084fc, #f472b6);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .nav-links {
+      display: flex; gap: 6px; flex-wrap: wrap; justify-content: center;
+    }
+    .nav-link {
+      background: transparent; border: none; color: var(--muted);
+      font-family: 'Poppins', sans-serif; font-size: 0.82rem; font-weight: 600;
+      padding: 8px 14px; border-radius: 999px; cursor: pointer;
+      transition: 0.3s; position: relative;
+    }
+    .nav-link:hover { color: var(--text); }
+    .nav-link.active {
+      color: #fff; background: linear-gradient(135deg, #a855f7, #ec4899);
+      box-shadow: 0 6px 20px rgba(168, 85, 247, 0.4);
+    }
+    body.day .nav-link.active { color: #fff; }
+    .nav-actions { display: flex; gap: 10px; align-items: center; }
+    .icon-btn {
+      width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--border);
+      background: var(--card); color: var(--text); cursor: pointer;
+      display: grid; place-items: center; backdrop-filter: blur(12px);
+      transition: 0.3s; font-size: 1rem;
+    }
+    .icon-btn:hover { transform: scale(1.1) rotate(8deg); border-color: var(--primary); box-shadow: var(--glow); }
+    .icon-btn.muted { opacity: 0.55; }
+
+    /* Sections */
+    .section {
+      min-height: 100vh; padding: calc(var(--nav-h) + 24px) 20px 100px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .section-label {
+      font-family: 'Orbitron', sans-serif; font-size: 0.72rem; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
+      opacity: 0; transform: translateY(20px); transition: 0.7s cubic-bezier(.2,.8,.2,1);
+    }
+    .section-title {
+      font-family: 'Orbitron', sans-serif; font-size: clamp(1.8rem, 5vw, 2.8rem);
+      font-weight: 900; margin-bottom: 8px; text-align: center;
+      opacity: 0; transform: translateY(24px); transition: 0.7s 0.1s cubic-bezier(.2,.8,.2,1);
+    }
+    .section-title .grad {
+      background: linear-gradient(90deg, #c084fc, #f472b6, #60a5fa);
+      background-size: 200%;
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+      animation: gradientShift 6s linear infinite;
+    }
+    .section-quote {
+      text-align: center; max-width: 520px; margin: 0 auto 28px;
+      font-size: 1rem; font-weight: 600;
+      background: linear-gradient(90deg, #f472b6, #c084fc, #60a5fa, #34d399, #f472b6);
+      background-size: 300%;
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+      animation: gradientShift 5s linear infinite, floatY 4s ease-in-out infinite;
+      opacity: 0; transform: translateY(20px); transition: 0.7s 0.15s cubic-bezier(.2,.8,.2,1);
+    }
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    .section.in-view .section-label,
+    .section.in-view .section-title,
+    .section.in-view .section-quote,
+    .section.in-view .reveal {
+      opacity: 1; transform: none;
+    }
+
+    /* Glass card */
+    .glass {
+      width: min(920px, 100%);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--glow), 0 20px 60px rgba(0,0,0,0.35);
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .glass::before {
+      content: ''; position: absolute; inset: -1px;
+      background: linear-gradient(135deg, rgba(168,85,247,0.35), transparent 40%, transparent 60%, rgba(236,72,153,0.25));
+      border-radius: inherit; z-index: -1; opacity: 0.5; pointer-events: none;
+    }
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.75s cubic-bezier(.2,.8,.2,1), transform 0.75s cubic-bezier(.2,.8,.2,1);
+    }
+    .reveal.d1 { transition-delay: 0.12s; }
+    .reveal.d2 { transition-delay: 0.22s; }
+    .reveal.d3 { transition-delay: 0.32s; }
+    .reveal.d4 { transition-delay: 0.42s; }
+
+    /* Hero */
+    .hero-grid {
+      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 28px; align-items: center;
+    }
+    @media (max-width: 800px) {
+      .hero-grid { grid-template-columns: 1fr; text-align: center; }
+      .nav-links { display: none; }
+      .hero-copy { order: 2; }
+      .hero-visual { order: 1; }
+    }
+    .avatar-wrap {
+      position: relative; width: 220px; height: 220px; margin: 0 auto;
+    }
+    .avatar-ring {
+      position: absolute; inset: -8px; border-radius: 50%;
+      background: conic-gradient(from 0deg, #ec4899, #a855f7, #22d3ee, #34d399, #ec4899);
+      animation: spin 4s linear infinite;
+    }
+    .avatar-ring::after {
+      content: ''; position: absolute; inset: 4px; border-radius: 50%; background: var(--bg);
+    }
+    .avatar {
+      position: relative; z-index: 1; width: 100%; height: 100%; border-radius: 50%;
+      object-fit: cover; border: 3px solid rgba(255,255,255,0.15);
+      box-shadow: 0 0 40px rgba(168, 85, 247, 0.45);
+      animation: avatarFloat 5s ease-in-out infinite;
+    }
+    @keyframes avatarFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .status-chip {
+      position: absolute; bottom: 12px; right: 8px; z-index: 2;
+      background: rgba(16, 185, 129, 0.95); color: #fff;
+      font-size: 0.72rem; font-weight: 700; padding: 5px 10px; border-radius: 999px;
+      display: flex; align-items: center; gap: 6px;
+      box-shadow: 0 6px 18px rgba(16,185,129,0.4);
+      animation: pulseSoft 2s ease-in-out infinite;
+    }
+    .status-chip i { font-size: 0.55rem; }
+    @keyframes pulseSoft {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .hero-name {
+      font-family: 'Orbitron', sans-serif; font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 900; letter-spacing: 2px; margin: 8px 0 4px;
+      background: linear-gradient(90deg, #c084fc, #e879f9, #f0abfc);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-tag { color: var(--muted); font-size: 0.95rem; margin-bottom: 12px; }
+    .hero-about { color: var(--muted); font-size: 0.95rem; margin-bottom: 18px; max-width: 420px; }
+    @media (max-width: 800px) { .hero-about { margin-left: auto; margin-right: auto; } }
+
+    .stats-row {
+      display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 18px;
+    }
+    @media (max-width: 800px) { .stats-row { justify-content: center; } }
+    .stat {
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      border-radius: 14px; padding: 10px 16px; min-width: 100px;
+      transition: 0.3s; cursor: default;
+    }
+    .stat:hover { transform: translateY(-4px); border-color: var(--primary); box-shadow: var(--glow); }
+    .stat strong {
+      display: block; font-family: 'Orbitron', sans-serif; font-size: 1.15rem; color: var(--accent);
+    }
+    .stat span { font-size: 0.75rem; color: var(--muted); }
+
+    .btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+    @media (max-width: 800px) { .btn-row { justify-content: center; } }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 22px; border-radius: 12px; border: none;
+      font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.92rem;
+      cursor: pointer; text-decoration: none; color: #fff;
+      background: linear-gradient(135deg, #a855f7, #7c3aed);
+      box-shadow: 0 8px 24px rgba(124, 58, 237, 0.35);
+      transition: 0.3s cubic-bezier(.2,.8,.2,1); position: relative; overflow: hidden;
+    }
+    .btn:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 12px 32px rgba(124, 58, 237, 0.5); }
+    .btn.outline {
+      background: transparent; border: 2px solid var(--primary); color: var(--text);
+      box-shadow: none;
+    }
+    .btn.outline:hover { background: rgba(168, 85, 247, 0.15); }
+
+    .socials { display: flex; gap: 12px; flex-wrap: wrap; }
+    @media (max-width: 800px) { .socials { justify-content: center; } }
+    .socials a {
+      width: 44px; height: 44px; border-radius: 50%;
+      display: grid; place-items: center;
+      background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+      color: var(--text); font-size: 1.15rem; text-decoration: none;
+      transition: 0.35s cubic-bezier(.2,.8,.2,1);
+    }
+    .socials a:hover {
+      transform: translateY(-6px) scale(1.12);
+      background: linear-gradient(135deg, #a855f7, #ec4899);
+      border-color: transparent; color: #fff;
+      box-shadow: 0 10px 25px rgba(168, 85, 247, 0.45);
+    }
+
+    .engage {
+      display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; align-items: center;
+    }
+    @media (max-width: 800px) { .engage { justify-content: center; } }
+    .engage-item {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 14px; border-radius: 999px;
+      background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+      font-size: 0.85rem; cursor: pointer; transition: 0.3s;
+    }
+    .engage-item:hover { background: rgba(255,255,255,0.12); transform: scale(1.04); }
+    .engage-item.liked { color: #f472b6; border-color: #f472b6; }
+    .share-btn {
+      width: 38px; height: 38px; border-radius: 50%; border: none; color: #fff;
+      cursor: pointer; transition: 0.3s; font-size: 1rem;
+    }
+    .share-btn:hover { transform: scale(1.15); }
+    .share-wa { background: #25d366; }
+    .share-tg { background: #0088cc; }
+    .share-copy { background: #6b7280; }
+
+    /* About */
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    }
+    @media (max-width: 700px) { .about-grid { grid-template-columns: 1fr; } }
+    .about-card {
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: 18px; padding: 22px; transition: 0.4s;
+    }
+    .about-card:hover {
+      transform: translateY(-6px); border-color: var(--accent);
+      box-shadow: 0 16px 40px rgba(34, 211, 238, 0.15);
+    }
+    .about-card h3 {
+      font-family: 'Orbitron', sans-serif; font-size: 1rem; margin-bottom: 8px;
+      color: var(--accent);
+    }
+    .about-card p { color: var(--muted); font-size: 0.92rem; }
+
+    /* Skills */
+    .skills-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;
+    }
+    .skill {
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: 16px; padding: 18px; transition: 0.35s;
+    }
+    .skill:hover { transform: translateY(-5px); border-color: var(--green); box-shadow: 0 12px 30px rgba(52,211,153,0.15); }
+    .skill-head {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
+    }
+    .skill-head strong { font-size: 0.95rem; }
+    .skill-head span { font-size: 0.8rem; color: var(--green); font-weight: 700; }
+    .skill-icon {
+      width: 40px; height: 40px; border-radius: 12px;
+      display: grid; place-items: center; margin-bottom: 12px;
+      background: linear-gradient(135deg, rgba(52,211,153,0.2), rgba(34,211,238,0.15));
+      color: var(--green); font-size: 1.1rem;
+    }
+    .bar {
+      height: 8px; border-radius: 999px; background: rgba(255,255,255,0.08); overflow: hidden;
+    }
+    .bar > i {
+      display: block; height: 100%; width: 0; border-radius: inherit;
+      background: linear-gradient(90deg, #10b981, #22d3ee, #a855f7);
+      background-size: 200%;
+      transition: width 1.4s cubic-bezier(.2,.8,.2,1);
+      animation: gradientShift 3s linear infinite;
+    }
+    .section.in-view .skill[data-pct="95"] .bar > i { width: 95%; }
+    .section.in-view .skill[data-pct="92"] .bar > i { width: 92%; }
+    .section.in-view .skill[data-pct="88"] .bar > i { width: 88%; }
+    .section.in-view .skill[data-pct="85"] .bar > i { width: 85%; }
+    .section.in-view .skill[data-pct="80"] .bar > i { width: 80%; }
+
+    /* Projects */
+    .projects-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px;
+    }
+    .project {
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: 18px; padding: 22px; position: relative; overflow: hidden;
+      transition: transform 0.4s cubic-bezier(.2,.8,.2,1), box-shadow 0.4s, border-color 0.4s;
+      transform-style: preserve-3d;
+    }
+    .project::before {
+      content: ''; position: absolute; top: -40%; left: -40%; width: 80%; height: 80%;
+      background: radial-gradient(circle, rgba(251,146,60,0.25), transparent 70%);
+      opacity: 0; transition: 0.5s;
+    }
+    .project:hover {
+      transform: translateY(-8px) rotateX(4deg) rotateY(-3deg);
+      border-color: var(--orange);
+      box-shadow: 0 20px 50px rgba(251, 146, 60, 0.2);
+    }
+    .project:hover::before { opacity: 1; }
+    .project-badge {
+      display: inline-block; font-size: 0.7rem; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; padding: 4px 10px; border-radius: 999px;
+      background: rgba(251,146,60,0.18); color: var(--orange); margin-bottom: 12px;
+    }
+    .project h3 { font-size: 1.1rem; margin-bottom: 8px; }
+    .project p { color: var(--muted); font-size: 0.9rem; margin-bottom: 14px; }
+    .project-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .project-tags span {
+      font-size: 0.72rem; padding: 4px 10px; border-radius: 999px;
+      background: rgba(255,255,255,0.06); color: var(--muted); border: 1px solid var(--border);
+    }
+
+    /* Contact */
+    .contact-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px;
+    }
+    .contact-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 16px; border-radius: 16px;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      text-decoration: none; color: var(--text);
+      transition: 0.35s;
+    }
+    .contact-item:hover {
+      transform: translateX(6px); border-color: #f472b6;
+      box-shadow: 0 12px 30px rgba(244, 114, 182, 0.18);
+    }
+    .contact-item .ci {
+      width: 46px; height: 46px; border-radius: 14px;
+      display: grid; place-items: center; flex-shrink: 0;
+      background: linear-gradient(135deg, rgba(236,72,153,0.25), rgba(168,85,247,0.2));
+      color: #f9a8d4; font-size: 1.15rem;
+    }
+    .contact-item strong { display: block; font-size: 0.85rem; }
+    .contact-item span { font-size: 0.8rem; color: var(--muted); word-break: break-all; }
+
+    /* Bottom mobile nav */
+    .bottom-nav {
+      position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+      display: none; gap: 6px; z-index: 200;
+      background: rgba(10, 8, 28, 0.85); backdrop-filter: blur(16px);
+      padding: 8px 12px; border-radius: 999px; border: 1px solid var(--border);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    }
+    body.day .bottom-nav { background: rgba(255,255,255,0.9); }
+    .bottom-nav button {
+      width: 40px; height: 40px; border-radius: 50%; border: none;
+      background: transparent; color: var(--muted); cursor: pointer;
+      font-size: 0.85rem; font-weight: 700; transition: 0.3s;
+    }
+    .bottom-nav button.active {
+      background: linear-gradient(135deg, #a855f7, #ec4899); color: #fff;
+      box-shadow: 0 6px 18px rgba(168,85,247,0.45);
+    }
+    @media (max-width: 800px) {
+      .bottom-nav { display: flex; }
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px);
+      background: rgba(16,185,129,0.95); color: #fff; padding: 10px 20px;
+      border-radius: 12px; font-weight: 600; font-size: 0.9rem; z-index: 300;
+      opacity: 0; pointer-events: none; transition: 0.35s;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* Cursor glow */
+    .cursor-glow {
+      position: fixed; width: 280px; height: 280px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(168,85,247,0.18), transparent 70%);
+      pointer-events: none; z-index: 0; transform: translate(-50%, -50%);
+      transition: left 0.15s ease-out, top 0.15s ease-out; opacity: 0.7;
+    }
+    @media (max-width: 800px) { .cursor-glow { display: none; } }
+
+    footer {
+      text-align: center; padding: 24px; color: var(--muted); font-size: 0.82rem;
+      border-top: 1px solid var(--border); position: relative; z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor-glow" id="cursorGlow"></div>
+  <canvas id="bg-canvas"></canvas>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-orb orb-3"></div>
+
+  <audio id="bgMusic" loop preload="auto">
+    <source src="src/dar-ka-name-suna-govind.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- WELCOME -->
+  <div id="welcome">
+    <div class="welcome-ring"></div>
+    <div class="welcome-ring r2"></div>
+    <div class="welcome-ring r3"></div>
+    <div class="welcome-inner">
+      <div class="pulse-heart">❤️</div>
+      <h1 class="welcome-title">Welcome to<br>Govind's World</h1>
+      <p class="welcome-sub">Developer • Creator • Dreamer</p>
+      <p class="welcome-quote">"Code se duniya badalte hain"</p>
+      <button class="btn-door" onclick="openDoor()">
+        <i class="fas fa-door-open"></i>&nbsp; Open the Door
+      </button>
+      <br>
+      <button class="music-pill" id="welcomeMusicBtn" onclick="toggleMusic()">
+        <i class="fas fa-music"></i> <span id="welcomeMusicText">Music On</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- APP -->
+  <div id="app">
+    <header class="topnav">
+      <div class="brand">GOVIND</div>
+      <nav class="nav-links">
+        <button class="nav-link active" data-target="home">Home</button>
+        <button class="nav-link" data-target="about">About</button>
+        <button class="nav-link" data-target="skills">Skills</button>
+        <button class="nav-link" data-target="projects">Projects</button>
+        <button class="nav-link" data-target="contact">Contact</button>
+      </nav>
+      <div class="nav-actions">
+        <button class="icon-btn" id="themeToggle" title="Theme"><i class="fas fa-moon"></i></button>
+        <button class="icon-btn" id="floatingMusicBtn" onclick="toggleMusic()" title="Music">
+          <i class="fas fa-music" id="floatingMusicIcon"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- HOME -->
+    <section class="section in-view" id="home">
+      <p class="section-label">Portfolio</p>
+      <h2 class="section-title"><span class="grad">GOVIND</span></h2>
+      <p class="section-quote">"Silence is my power,<br>Code is my language 🔥"</p>
+      <div class="glass reveal">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <h1 class="hero-name">GOVIND</h1>
+            <p class="hero-tag">@GOVIND-BOTS</p>
+            <p class="hero-about">💻 Telegram Bot Developer | Python | Pyrogram<br>⚡ Building automation with creativity</p>
+            <div class="stats-row reveal d1">
+              <div class="stat"><strong id="viewCount">0</strong><span>Views</span></div>
+              <div class="stat"><strong id="likeCount">0</strong><span>Likes</span></div>
+              <div class="stat"><strong>5+</strong><span>Skills</span></div>
+            </div>
+            <div class="btn-row reveal d2">
+              <a class="btn" href="https://instagram.com/govind__official_mp" target="_blank" rel="noopener">
+                <i class="fab fa-instagram"></i> Follow
+              </a>
+              <button class="btn outline" onclick="scrollToSection('about')">About Me →</button>
+            </div>
+            <div class="socials reveal d3">
+              <a href="https://github.com/GOVIND-BOTS" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github"></i></a>
+              <a href="https://telegram.dog/govind_official_mp13" target="_blank" rel="noopener" title="Telegram"><i class="fab fa-telegram"></i></a>
+              <a href="https://instagram.com/govind__official_mp" target="_blank" rel="noopener" title="Instagram"><i class="fab fa-instagram"></i></a>
+              <a href="https://www.facebook.com/share/19WKnx52wk/" target="_blank" rel="noopener" title="Facebook"><i class="fab fa-facebook"></i></a>
+              <a href="mailto:govindofficialmp@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+              <a href="tel:+919713856013" title="Call"><i class="fas fa-phone"></i></a>
+            </div>
+            <div class="engage reveal d4">
+              <div class="engage-item" id="likeBtn" onclick="toggleLike()">
+                <i class="fas fa-heart"></i> <span>Like</span>
+              </div>
+              <button class="share-btn share-wa" onclick="shareWhatsApp()" title="WhatsApp"><i class="fab fa-whatsapp"></i></button>
+              <button class="share-btn share-tg" onclick="shareTelegram()" title="Telegram"><i class="fab fa-telegram"></i></button>
+              <button class="share-btn share-copy" onclick="copyLink()" title="Copy link"><i class="fas fa-link"></i></button>
+            </div>
+          </div>
+          <div class="hero-visual reveal d1">
+            <div class="avatar-wrap">
+              <div class="avatar-ring"></div>
+              <img class="avatar" src="https://graph.org/file/0471decf208b82b1a9e58.jpg" alt="Govind" />
+              <div class="status-chip"><i class="fas fa-circle"></i> Online</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section" id="about">
+      <p class="section-label">Who I Am</p>
+      <h2 class="section-title">About <span class="grad">Me</span></h2>
+      <p class="section-quote">"Main nahi manta limits,<br>Main banata hoon systems 💻"</p>
+      <div class="glass reveal">
+        <div class="about-grid">
+          <div class="about-card reveal d1">
+            <h3><i class="fas fa-user-astronaut"></i> Story</h3>
+            <p>Passionate Telegram Bot Developer from India. Love creating smart automation tools using Python &amp; Pyrogram. Always learning &amp; building cool stuff 🚀</p>
+          </div>
+          <div class="about-card reveal d2">
+            <h3><i class="fas fa-bolt"></i> Focus</h3>
+            <p>Smart bots, automation pipelines, scraping systems aur creative tools — systems jo scale karein, sirf scripts nahi.</p>
+          </div>
+          <div class="about-card reveal d3">
+            <h3><i class="fas fa-map-marker-alt"></i> Base</h3>
+            <p>India · Remote-friendly · Open to collabs on Telegram bots &amp; automation projects.</p>
+          </div>
+          <div class="about-card reveal d4">
+            <h3><i class="fas fa-rocket"></i> Mindset</h3>
+            <p>Silence is power. Code is language. Limits nahi — systems banate hain.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="section" id="skills">
+      <p class="section-label">Toolbox</p>
+      <h2 class="section-title">My <span class="grad">Skills</span></h2>
+      <p class="section-quote">"Skills se nahi,<br>Hunger se farq padta hai 🔥"</p>
+      <div class="glass reveal">
+        <div class="skills-grid">
+          <div class="skill reveal d1" data-pct="95">
+            <div class="skill-icon"><i class="fab fa-python"></i></div>
+            <div class="skill-head"><strong>Python &amp; Pyrogram</strong><span>95%</span></div>
+            <div class="bar"><i></i></div>
+          </div>
+          <div class="skill reveal d2" data-pct="92">
+            <div class="skill-icon"><i class="fab fa-telegram"></i></div>
+            <div class="skill-head"><strong>Telegram Bot Dev</strong><span>92%</span></div>
+            <div class="bar"><i></i></div>
+          </div>
+          <div class="skill reveal d3" data-pct="88">
+            <div class="skill-icon"><i class="fas fa-robot"></i></div>
+            <div class="skill-head"><strong>Automation &amp; Scraping</strong><span>88%</span></div>
+            <div class="bar"><i></i></div>
+          </div>
+          <div class="skill reveal d4" data-pct="85">
+            <div class="skill-icon"><i class="fas fa-plug"></i></div>
+            <div class="skill-head"><strong>API Integration</strong><span>85%</span></div>
+            <div class="bar"><i></i></div>
+          </div>
+          <div class="skill reveal d1" data-pct="80">
+            <div class="skill-icon"><i class="fab fa-github"></i></div>
+            <div class="skill-head"><strong>Git &amp; GitHub</strong><span>80%</span></div>
+            <div class="bar"><i></i></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="section" id="projects">
+      <p class="section-label">Work</p>
+      <h2 class="section-title">Featured <span class="grad">Projects</span></h2>
+      <p class="section-quote">"Projects bolte hain,<br>baatein nahi ⚡"</p>
+      <div class="glass reveal">
+        <div class="projects-grid">
+          <article class="project reveal d1">
+            <span class="project-badge">Bot</span>
+            <h3>Multiple Telegram Bots</h3>
+            <p>Custom bots for automation, management aur community tools.</p>
+            <div class="project-tags"><span>Python</span><span>Pyrogram</span><span>Telegram</span></div>
+          </article>
+          <article class="project reveal d2">
+            <span class="project-badge">Automation</span>
+            <h3>Auto Poster &amp; Scrapers</h3>
+            <p>Smart pipelines that post, scrape aur schedule content automatically.</p>
+            <div class="project-tags"><span>Scraping</span><span>Scheduler</span><span>API</span></div>
+          </article>
+          <article class="project reveal d3">
+            <span class="project-badge">Tools</span>
+            <h3>Custom Automation Tools</h3>
+            <p>One-off systems built for speed, reliability aur creativity.</p>
+            <div class="project-tags"><span>Python</span><span>Automation</span></div>
+          </article>
+          <article class="project reveal d4">
+            <span class="project-badge">Open Source</span>
+            <h3>GitHub Projects</h3>
+            <p>Open source work on GitHub — code, bots aur experiments.</p>
+            <div class="project-tags"><span>GitHub</span><span>OSS</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section" id="contact">
+      <p class="section-label">Connect</p>
+      <h2 class="section-title">Get In <span class="grad">Touch</span></h2>
+      <p class="section-quote">"Connect karo,<br>warna miss ho jaoge 🚀"</p>
+      <div class="glass reveal">
+        <div class="contact-grid">
+          <a class="contact-item reveal d1" href="mailto:govindofficialmp@gmail.com">
+            <div class="ci"><i class="fas fa-envelope"></i></div>
+            <div><strong>Email</strong><span>govindofficialmp@gmail.com</span></div>
+          </a>
+          <a class="contact-item reveal d2" href="tel:+919713856013">
+            <div class="ci"><i class="fas fa-phone"></i></div>
+            <div><strong>Phone</strong><span>+91 9713856013</span></div>
+          </a>
+          <a class="contact-item reveal d3" href="https://instagram.com/govind__official_mp" target="_blank" rel="noopener">
+            <div class="ci"><i class="fab fa-instagram"></i></div>
+            <div><strong>Instagram</strong><span>@govind__official_mp</span></div>
+          </a>
+          <a class="contact-item reveal d4" href="https://www.facebook.com/share/19WKnx52wk/" target="_blank" rel="noopener">
+            <div class="ci"><i class="fab fa-facebook"></i></div>
+            <div><strong>Facebook</strong><span>govind official</span></div>
+          </a>
+          <a class="contact-item reveal d1" href="https://telegram.dog/govind_official_mp13" target="_blank" rel="noopener">
+            <div class="ci"><i class="fab fa-telegram"></i></div>
+            <div><strong>Telegram</strong><span>@govind_official_mp13</span></div>
+          </a>
+          <a class="contact-item reveal d2" href="https://github.com/GOVIND-BOTS" target="_blank" rel="noopener">
+            <div class="ci"><i class="fab fa-github"></i></div>
+            <div><strong>GitHub</strong><span>GOVIND-BOTS</span></div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <footer>© 2026 GOVIND · Built with ❤️ · Code is my language</footer>
+  </div>
+
+  <nav class="bottom-nav" id="bottomNav">
+    <button class="active" data-target="home">1</button>
+    <button data-target="about">2</button>
+    <button data-target="skills">3</button>
+    <button data-target="projects">4</button>
+    <button data-target="contact">5</button>
+  </nav>
+
+  <div class="toast" id="toast">Link copied!</div>
+
+  <script>
+    /* ===== Particle background ===== */
+    (function () {
+      const canvas = document.getElementById('bg-canvas');
+      const ctx = canvas.getContext('2d');
+      let w, h, particles = [];
+      const COUNT = 70;
+
+      function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+      }
+      function init() {
+        particles = Array.from({ length: COUNT }, () => ({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: Math.random() * 2 + 0.4,
+          vx: (Math.random() - 0.5) * 0.35,
+          vy: (Math.random() - 0.5) * 0.35,
+          c: ['#a855f7', '#ec4899', '#22d3ee', '#34d399'][Math.floor(Math.random() * 4)]
+        }));
+      }
+      function draw() {
+        ctx.clearRect(0, 0, w, h);
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          p.x += p.vx; p.y += p.vy;
+          if (p.x < 0 || p.x > w) p.vx *= -1;
+          if (p.y < 0 || p.y > h) p.vy *= -1;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = p.c;
+          ctx.globalAlpha = 0.55;
+          ctx.fill();
+          for (let j = i + 1; j < particles.length; j++) {
+            const q = particles[j];
+            const dx = p.x - q.x, dy = p.y - q.y;
+            const dist = Math.hypot(dx, dy);
+            if (dist < 120) {
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(q.x, q.y);
+              ctx.strokeStyle = p.c;
+              ctx.globalAlpha = 0.12 * (1 - dist / 120);
+              ctx.stroke();
+            }
+          }
+        }
+        ctx.globalAlpha = 1;
+        requestAnimationFrame(draw);
+      }
+      window.addEventListener('resize', () => { resize(); init(); });
+      resize(); init(); draw();
+    })();
+
+    /* ===== Cursor glow ===== */
+    const glow = document.getElementById('cursorGlow');
+    window.addEventListener('pointermove', (e) => {
+      glow.style.left = e.clientX + 'px';
+      glow.style.top = e.clientY + 'px';
+    });
+
+    /* ===== Music ===== */
+    const bgMusic = document.getElementById('bgMusic');
+    let isMusicPlaying = false;
+    bgMusic.volume = 0.4;
+
+    function updateMusicUI() {
+      const welcomeBtn = document.getElementById('welcomeMusicBtn');
+      const welcomeText = document.getElementById('welcomeMusicText');
+      const floatingBtn = document.getElementById('floatingMusicBtn');
+      const floatingIcon = document.getElementById('floatingMusicIcon');
+      if (isMusicPlaying) {
+        welcomeBtn && welcomeBtn.classList.add('playing');
+        if (welcomeText) welcomeText.textContent = 'Music Playing';
+        floatingBtn && floatingBtn.classList.remove('muted');
+        if (floatingIcon) floatingIcon.className = 'fas fa-music';
+      } else {
+        welcomeBtn && welcomeBtn.classList.remove('playing');
+        if (welcomeText) welcomeText.textContent = 'Music On';
+        floatingBtn && floatingBtn.classList.add('muted');
+        if (floatingIcon) floatingIcon.className = 'fas fa-volume-mute';
+      }
+    }
+
+    function toggleMusic() {
+      if (isMusicPlaying) {
+        bgMusic.pause();
+        isMusicPlaying = false;
+      } else {
+        bgMusic.play().then(() => { isMusicPlaying = true; }).catch(() => {
+          showToast('Music play nahi hua — page refresh karke try karo');
+        });
+      }
+      updateMusicUI();
+    }
+
+    function openDoor() {
+      document.getElementById('welcome').classList.add('hide');
+      setTimeout(() => {
+        document.getElementById('app').classList.add('show');
+        bumpViews();
+        if (!isMusicPlaying) {
+          bgMusic.play().then(() => { isMusicPlaying = true; updateMusicUI(); }).catch(() => {});
+        }
+      }, 450);
+    }
+
+    /* ===== Theme ===== */
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('day');
+      const icon = themeToggle.querySelector('i');
+      icon.className = document.body.classList.contains('day') ? 'fas fa-sun' : 'fas fa-moon';
+    });
+
+    /* ===== Navigation ===== */
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    document.querySelectorAll('.nav-link, #bottomNav button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const t = btn.getAttribute('data-target');
+        if (t) scrollToSection(t);
+      });
+    });
+
+    const sections = document.querySelectorAll('.section');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const bottomBtns = document.querySelectorAll('#bottomNav button');
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          const id = entry.target.id;
+          navLinks.forEach(l => l.classList.toggle('active', l.dataset.target === id));
+          bottomBtns.forEach(l => l.classList.toggle('active', l.dataset.target === id));
+        }
+      });
+    }, { threshold: 0.35 });
+
+    sections.forEach(s => io.observe(s));
+
+    /* ===== Views / Likes ===== */
+    function bumpViews() {
+      let views = parseInt(localStorage.getItem('portfolioViews') || '0', 10) + 1;
+      localStorage.setItem('portfolioViews', views);
+      document.getElementById('viewCount').textContent = views;
+    }
+    function loadLikes() {
+      const likes = parseInt(localStorage.getItem('portfolioLikes') || '0', 10);
+      document.getElementById('likeCount').textContent = likes;
+      if (localStorage.getItem('portfolioLiked') === '1') {
+        document.getElementById('likeBtn').classList.add('liked');
+      }
+    }
+    function toggleLike() {
+      const btn = document.getElementById('likeBtn');
+      let likes = parseInt(localStorage.getItem('portfolioLikes') || '0', 10);
+      if (localStorage.getItem('portfolioLiked') === '1') {
+        likes = Math.max(0, likes - 1);
+        localStorage.setItem('portfolioLiked', '0');
+        btn.classList.remove('liked');
+      } else {
+        likes += 1;
+        localStorage.setItem('portfolioLiked', '1');
+        btn.classList.add('liked');
+      }
+      localStorage.setItem('portfolioLikes', likes);
+      document.getElementById('likeCount').textContent = likes;
+    }
+    loadLikes();
+
+    /* ===== Share ===== */
+    const shareUrl = location.href;
+    const shareText = "Check out GOVIND's portfolio — Telegram Bot Developer 🔥";
+    function shareWhatsApp() {
+      window.open(`https://wa.me/?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`, '_blank');
+    }
+    function shareTelegram() {
+      window.open(`https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`, '_blank');
+    }
+    function copyLink() {
+      navigator.clipboard.writeText(shareUrl).then(() => showToast('Link copied!')).catch(() => showToast('Copy failed'));
+    }
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2200);
+    }
+  </script>
+</body>
+</html>
