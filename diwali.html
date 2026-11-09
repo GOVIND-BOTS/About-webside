@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090611">
+<meta name="description" content="Happy Diwali wishes from GOVIND.">
+<title>Happy Diwali | GOVIND</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#090611;--gold:#ffd166;--cream:#fff4d6;--muted:#c5b9a5}
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;overflow-x:hidden;background:radial-gradient(ellipse at 50% 0%,#321642 0%,#130b20 42%,var(--bg) 78%);color:var(--cream);font-family:Poppins,sans-serif}
+#sky{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.glow{position:fixed;width:340px;height:340px;border-radius:50%;filter:blur(100px);opacity:.18;pointer-events:none;z-index:0}
+.one{background:#ff9f1c;top:12%;left:-150px}.two{background:#a855f7;right:-160px;bottom:8%}
+.nav{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;padding:22px clamp(18px,5vw,64px)}
+.brand{font:700 1rem Orbitron,sans-serif;letter-spacing:2px;color:var(--gold)}
+.back{color:var(--cream);text-decoration:none;border:1px solid #ffd16666;padding:9px 16px;border-radius:999px;font-size:.82rem}
+main{position:relative;z-index:1;min-height:calc(100vh - 75px);display:flex;align-items:center;justify-content:center;padding:35px 18px 70px}
+.hero{width:min(900px,100%);text-align:center;position:relative;padding:clamp(24px,5vw,54px) 20px 42px}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;color:var(--gold);font-size:.76rem;letter-spacing:4px;text-transform:uppercase;font-weight:600}
+.eyebrow:before,.eyebrow:after{content:"";width:34px;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
+.eyebrow:after{transform:rotate(180deg)}
+h1{font:900 clamp(2.5rem,8vw,6.3rem)/1.12 Orbitron,sans-serif;letter-spacing:-2px;margin:20px 0 10px;background:linear-gradient(100deg,#fff1b8 5%,#ffb52e 38%,#fff0a8 60%,#e99bff 90%);background-size:220%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 7s linear infinite;filter:drop-shadow(0 0 24px #ffb52e35)}
+@keyframes shine{to{background-position:220% center}}
+.year{font:500 clamp(.8rem,2vw,1rem) Orbitron,sans-serif;letter-spacing:6px;color:#ffcf70}
+.lead{max-width:620px;margin:24px auto 0;color:#e7d9c3;font-size:clamp(.95rem,2.5vw,1.12rem);line-height:1.9}
+.lead strong{color:var(--gold)}
+.diya-row{display:flex;justify-content:center;align-items:end;gap:clamp(22px,7vw,64px);margin:45px auto 34px}
+.diya{position:relative;width:74px;height:35px;border-radius:8px 8px 48px 48px;background:linear-gradient(180deg,#ffd166,#d65a17 75%,#7e2c14);box-shadow:0 12px 30px #ff8c1a35,inset 0 -5px 8px #782d1d;animation:float 3s ease-in-out infinite}
+.diya:nth-child(2){transform:scale(1.25);animation-delay:.45s}.diya:nth-child(3){animation-delay:.9s}
+.diya:before{content:"";position:absolute;left:50%;top:-29px;transform:translateX(-50%);width:17px;height:29px;border-radius:100% 0 100% 0;background:radial-gradient(ellipse at 35% 70%,#fff8b4 0 15%,#ffcf42 38%,#ff6a00 72%,transparent 74%);filter:drop-shadow(0 0 12px #ffae24);animation:flame .8s ease-in-out infinite alternate}
+.diya:after{content:"";position:absolute;left:50%;top:4px;transform:translateX(-50%);width:42px;height:9px;border-radius:50%;background:#ffdc83;opacity:.8}
+@keyframes flame{from{transform:translateX(-50%) rotate(-5deg) scale(.92)}to{transform:translateX(-50%) rotate(6deg) scale(1.08)}}
+@keyframes float{0%,100%{translate:0 0}50%{translate:0 -7px}}
+.wish-card{max-width:680px;margin:auto;padding:25px clamp(18px,4vw,38px);border:1px solid #ffd16645;border-radius:24px;background:linear-gradient(135deg,#ffffff0c,#ffbd5910);backdrop-filter:blur(14px);box-shadow:0 18px 70px #0005,0 0 45px #ffb52e0d}
+.wish-card p{font-size:clamp(.92rem,2.4vw,1.04rem);line-height:1.9;color:#eadfcf}
+.highlight{display:block;margin-top:12px;color:var(--gold);font-weight:700;font-size:1.08rem}
+.signature{margin:24px 0 0;color:var(--muted);font-size:.85rem;letter-spacing:2px;text-transform:uppercase}
+.signature b{display:block;font:700 1.15rem Orbitron,sans-serif;letter-spacing:3px;color:#fff0bd;margin-top:7px}
+.actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:30px}
+.btn{border:0;border-radius:999px;padding:13px 23px;font:600 .9rem Poppins,sans-serif;text-decoration:none;cursor:pointer;transition:.25s;display:inline-flex;align-items:center;gap:9px}
+.primary{color:#2b1606;background:linear-gradient(110deg,#ffe29a,#ffad24);box-shadow:0 8px 28px #ffae2438}
+.secondary{color:var(--cream);background:#ffffff0b;border:1px solid #ffd16655}
+.btn:hover,.back:hover{transform:translateY(-4px);filter:brightness(1.08)}
+footer{position:relative;z-index:1;text-align:center;padding:0 18px 25px;color:#9c8d7b;font-size:.75rem}
+.sparkle{position:absolute;color:#ffdc80;opacity:.7;animation:twinkle 2.4s ease-in-out infinite}
+.s1{top:12%;left:10%;font-size:20px}.s2{top:25%;right:9%;font-size:15px;animation-delay:.7s}.s3{bottom:20%;left:13%;font-size:14px;animation-delay:1.2s}.s4{bottom:15%;right:12%;font-size:22px;animation-delay:.4s}
+@keyframes twinkle{0%,100%{opacity:.2;transform:scale(.7) rotate(0)}50%{opacity:1;transform:scale(1.2) rotate(45deg)}}
+@media(max-width:520px){.nav{padding:17px}.hero{padding-left:4px;padding-right:4px}.diya{width:58px;height:29px}.diya:before{top:-25px;height:25px;width:15px}.diya-row{margin:40px auto 30px}.s1{left:4%}.s2{right:4%}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important}}
+</style>
+</head>
+<body>
+<canvas id="sky" aria-hidden="true"></canvas><div class="glow one"></div><div class="glow two"></div>
+<nav class="nav"><div class="brand">GOVIND ✦</div><a class="back" href="./index.html">← Back to Portfolio</a></nav>
+<main><section class="hero">
+<span class="sparkle s1">✦</span><span class="sparkle s2">✧</span><span class="sparkle s3">✦</span><span class="sparkle s4">✧</span>
+<div class="eyebrow">Festival of Lights</div><h1>Happy Diwali</h1><div class="year">A NIGHT OF LIGHT &amp; JOY</div>
+<p class="lead">May this Diwali bring <strong>new hopes, endless happiness</strong> and bright opportunities into your life. Let every diya light up a dream and every sparkle bring a reason to smile.</p>
+<div class="diya-row" aria-label="Three glowing diyas"><div class="diya"></div><div class="diya"></div><div class="diya"></div></div>
+<div class="wish-card"><p>Wishing you and your family a beautiful Diwali filled with love, peace, prosperity and unforgettable moments. May the light of this festival guide you towards success and keep darkness away from every corner of your life.<span class="highlight">Keep shining. Keep smiling. Spread happiness! 🪔</span></p><div class="signature">With warm wishes from<b>GOVIND</b></div></div>
+<div class="actions"><button class="btn primary" id="shareBtn">✦ Share Wishes</button><a class="btn secondary" href="./index.html">⌂ Visit My Portfolio</a></div>
+</section></main><footer>Made with ❤️ and a little Diwali magic · GOVIND-BOTS</footer>
+<script>
+const canvas=document.getElementById('sky'),ctx=canvas.getContext('2d');let w,h,stars=[],sparks=[];
+function resize(){w=innerWidth;h=innerHeight;canvas.width=w*devicePixelRatio;canvas.height=h*devicePixelRatio;canvas.style.width=w+'px';canvas.style.height=h+'px';ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);stars=Array.from({length:Math.min(85,Math.floor(w/9))},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.8+.4,a:Math.random()*.65+.15,s:Math.random()*.35+.08}))}
+function burst(x,y){for(let i=0;i<48;i++){let a=Math.PI*2*i/48,v=Math.random()*2.7+1;sparks.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,life:1,decay:Math.random()*.012+.009,hue:Math.random()*35+28})}}
+function draw(){ctx.clearRect(0,0,w,h);stars.forEach(p=>{p.y-=p.s;if(p.y<0){p.y=h;p.x=Math.random()*w}ctx.globalAlpha=p.a*(.65+.35*Math.sin(Date.now()/700+p.x));ctx.fillStyle='#ffd98a';ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill()});sparks=sparks.filter(p=>p.life>0);sparks.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vx*=.985;p.vy*=.985;p.life-=p.decay;ctx.globalAlpha=Math.max(0,p.life);ctx.fillStyle='hsl('+p.hue+',100%,65%)';ctx.beginPath();ctx.arc(p.x,p.y,2,0,Math.PI*2);ctx.fill()});ctx.globalAlpha=1;requestAnimationFrame(draw)}
+resize();addEventListener('resize',resize);draw();setInterval(()=>{if(!document.hidden)burst(Math.random()*w*.8+w*.1,Math.random()*h*.35+h*.12)},1900);
+document.getElementById('shareBtn').addEventListener('click',async()=>{const data={title:'Happy Diwali from GOVIND',text:'Wishing you and your family a bright, joyful and beautiful Diwali! 🪔✨',url:location.href};try{if(navigator.share)await navigator.share(data);else{await navigator.clipboard.writeText(data.text+' '+data.url);alert('Diwali wishes copied! Share them with your loved ones.')}}catch(e){if(e.name!=='AbortError')alert('Copy this page link from your browser and share it!')}});
+</script>
+</body></html>
